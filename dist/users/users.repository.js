@@ -78,6 +78,17 @@ let UsersRepository = class UsersRepository {
     async getCofee() {
         return 'no se hacer cafe, solo te y mate, jaja';
     }
+    async getCredential(email, password) {
+        if (!email || !password) {
+            throw new Error('Email and password are required');
+        }
+        const user = this.users.find((user) => user.email === email && user.password === password);
+        if (!user) {
+            throw new Error('Invalid credentials');
+        }
+        const { password: _, ...safeUser } = user;
+        return safeUser;
+    }
 };
 exports.UsersRepository = UsersRepository;
 exports.UsersRepository = UsersRepository = __decorate([

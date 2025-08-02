@@ -17,6 +17,15 @@ export declare class UsersController {
             city: string;
         }[];
     }>;
+    getCredential(email: string, name: string): Promise<{
+        id: number;
+        email: string;
+        name: string;
+        address: string;
+        phone: string;
+        country: string;
+        city: string;
+    }>;
     getUserById(id: string): Promise<{
         id: number;
         email: string;

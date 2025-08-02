@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { get } from "http";
 
 @Injectable()
 export class UsersRepository {
@@ -25,7 +26,7 @@ export class UsersRepository {
     }
   ];
 
-    // 🔹 GET /products
+    // 🔹 GET /users
     async getPaginatedUsers(page: number, limit: number) {
   const start = (page - 1) * limit;
   const end = start + limit;
@@ -84,6 +85,26 @@ async updateUserById(id: number, data) {
     // 🔹 GET /users/cofee
     async getCofee() {
         return 'no se hacer cafe, solo te y mate, jaja';
-    }       
+    }      
+   
+    async getCredential(email: string, password: string) {
+  if (!email || !password) {
+    throw new Error('Email and password are required');
+  }
 
+  const user = this.users.find(
+    (user) => user.email === email && user.password === password,
+  );
+
+  if (!user) {
+    throw new Error('Invalid credentials');
+  }
+
+  const { password: _, ...safeUser } = user;
+  return safeUser;
 }
+
+
+
+  }
+

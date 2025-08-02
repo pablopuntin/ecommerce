@@ -14,6 +14,13 @@ export class UsersController {
     return this.userService.getPaginatedUsers(page, limit);
   }
 
+  getCredential(
+    @Query('email') email: string,
+    @Query('password') name: string,
+  ) {
+    return this.userService.getCredential(email, name);
+  }
+
   //para un id, por ejemplo get/1
   @Get(':id')
   getUserById(@Param('id') id: string ) {

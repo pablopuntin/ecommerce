@@ -23,6 +23,9 @@ let UsersController = class UsersController {
     getUsers(page, limit) {
         return this.userService.getPaginatedUsers(page, limit);
     }
+    getCredential(email, name) {
+        return this.userService.getCredential(email, name);
+    }
     getUserById(id) {
         return this.userService.getUserById(Number(id));
     }
@@ -48,6 +51,13 @@ __decorate([
     __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUsers", null);
+__decorate([
+    __param(0, (0, common_1.Query)('email')),
+    __param(1, (0, common_1.Query)('password')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getCredential", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

@@ -28,4 +28,13 @@ export declare class UsersRepository {
     createUser(data: any): Promise<any>;
     updateUserById(id: number, data: any): Promise<any>;
     getCofee(): Promise<string>;
+    getCredential(email: string, password: string): Promise<{
+        id: number;
+        email: string;
+        name: string;
+        address: string;
+        phone: string;
+        country: string;
+        city: string;
+    }>;
 }

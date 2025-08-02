@@ -26,6 +26,15 @@ export declare class UserService {
         country: string;
         city: string;
     } | null>;
+    getCredential(email: string, password: string): Promise<{
+        id: number;
+        email: string;
+        name: string;
+        address: string;
+        phone: string;
+        country: string;
+        city: string;
+    }>;
     createUser(data: any): Promise<any>;
     updateUserById(id: number, data: any): Promise<any>;
     deleteUserById(id: number): Promise<boolean>;

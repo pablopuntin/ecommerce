@@ -23,6 +23,12 @@ let UserService = class UserService {
     getUserById(id) {
         return this.usersRepository.getUserById(id);
     }
+    getCredential(email, password) {
+        if (!email || !password) {
+            throw new Error('Email and password are required');
+        }
+        return this.usersRepository.getCredential(email, password);
+    }
     createUser(data) {
         return this.usersRepository.createUser(data);
     }
