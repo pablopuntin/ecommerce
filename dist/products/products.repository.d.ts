@@ -1,7 +1,5 @@
-import { ProductsRepository } from './products.repository';
-export declare class ProductsService {
-    private productsRepository;
-    constructor(productsRepository: ProductsRepository);
+export declare class ProductsRepository {
+    private products;
     getPaginatedProducts(page: number, limit: number): Promise<{
         total: number;
         page: number;

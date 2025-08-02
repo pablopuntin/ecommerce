@@ -1,8 +1,6 @@
-import { UserService } from './users.service';
-export declare class UsersController {
-    private readonly userService;
-    constructor(userService: UserService);
-    getUsers(page: number, limit: number): Promise<{
+export declare class UsersRepository {
+    private users;
+    getPaginatedUsers(page: number, limit: number): Promise<{
         total: number;
         page: number;
         limit: number;
@@ -17,7 +15,7 @@ export declare class UsersController {
             city: string;
         }[];
     }>;
-    getUserById(id: string): Promise<{
+    getUserById(id: number): Promise<{
         id: number;
         email: string;
         name: string;
@@ -26,8 +24,8 @@ export declare class UsersController {
         country: string;
         city: string;
     } | null>;
-    getCofee(): string;
+    deleteUserById(id: number): Promise<boolean>;
     createUser(data: any): Promise<any>;
-    updateUserById(data: any, id: string): Promise<any>;
-    deleteUsersById(id: string): Promise<boolean>;
+    updateUserById(id: number, data: any): Promise<any>;
+    getCofee(): Promise<string>;
 }
