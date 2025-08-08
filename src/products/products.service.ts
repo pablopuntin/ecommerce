@@ -1,37 +1,27 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
 import { ProductsRepository } from './products.repository';
+import { Product } from "./entities/product.entity";
 
 @Injectable()
-export class ProductsService {
+export class ProductsService{
+  constructor(
+    private  productsRepository: ProductsRepository){}
 
-  constructor(private productsRepository: ProductsRepository) {}
+    getProducts(page: number, limit:number){
+      return this.productsRepository.getProducts(page, limit);
+    }
 
- 
-  // 🔹 GET /products
-  getPaginatedProducts(page: number, limit: number) {
-    return this.productsRepository.getPaginatedProducts(page, limit);
-  }
+    addProducts(){
+      return this.productsRepository.addProducts();
+    }
 
-  // 🔹 GET /products/:id
-  getProductById(id: number) {
-    return this.productsRepository.getProductById(id);
-  }
+    getProductById(id:string){
+      return this.productsRepository.getProductById(id);
+    }
 
-  // 🔹 POST /products
-  createProduct(data) {
-    return this.productsRepository.createProduct(data);
-  }
-
-  // 🔹 PUT /products/:id
-  updateProductById(id: number, data) {
-    return this.productsRepository.updateProductById(id, data);
-  }
-
-  // 🔹 DELETE /products/:id
-  deleteProductById(id: number) {
-    return this.productsRepository.deleteProductById(id);
-  }
+    updateProduct(id:string, product: Product) {
+        return this.productsRepository.updateProduct(id, product);
+    }
   
-
-
+  
 }

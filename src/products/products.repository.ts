@@ -1,104 +1,71 @@
 import { Injectable } from "@nestjs/common";
-
+import { InjectRepository } from "@nestjs/typeorm";
+import { Categories } from "src/categories/entities/categories.entity";
+import { Product } from "./entities/product.entity";
+import * as data from '../../asset/data.json'
+import { Repository } from "typeorm";
 
 @Injectable()
-export class ProductsRepository {
-    private products = [
-        {
-id:1,
+export class ProductsRepository{
+  constructor(
+    @InjectRepository(Product)
+    private productsRepository: Repository<Product>,
+    @InjectRepository(Categories)
+    private categoriesRepository: Repository<Categories>,
+  ){}
 
-name:'lavandina',
+  async getProducts (page:number, limit:number): Promise<Product[]>{
+    let products = await this.productsRepository.find({
+      relations:{
+        categories: true,
+      }
+    });
+    const start = (page-1) * limit;
+    const end = start + limit;
+    products =products.slice(start, end);
+    return products;
+  }
 
-description: 'lavandina concentrada 1L',
-
-price: 500,
-
-stock: true,
-
-imgUrl: 'https://example.com/lavandina.jpg',
-        },
-        {
-id:2,
-
-name:'Fideo',
-
-description: 'fideo x 1 kg.',
-
-price: 2500,
-
-stock: true,
-
-imgUrl: 'https://example.com/fideo.jpg',
-        },
-        {
-id:3,
-
-name:'Arroz',
-
-description: 'aloz gallo olo',
-
-price: 1500,
-
-stock: true,
-
-imgUrl: 'https://example.com/arrroz.jpg',
-        }
-
-    ];
-
-    // 🔹 GET /products
-    async getPaginatedProducts(page: number, limit: number) {
-  const start = (page - 1) * limit;
-  const end = start + limit;
-
-  const paginated = this.products.slice(start, end);
-
-  return {
-    total: this.products.length,
-    page,
-    limit,
-    data: paginated
-  };
-}
-
-  
-
-    // 🔹 GET /products/:id
-    async getProductById(id: number) {
-        const product = this.products.find(product => product.id === id);
-        if (!product) return null;
+  // 🔹 GET /products/:id
+    async getProductById(id: string) {
+        const product = await this.productsRepository.findOneBy({id});
+        if (!product) {return `Producto con ${id} no encontrado`;
+    }
         return product;
     }
 
-    // 🔹 POST /products
-    async createProduct(data) {
-        const newProduct = {
-            id: this.products.length + 1,
-            ...data,
-        };
-        this.products.push(newProduct);
-        return newProduct; 
-    }
+    // async addProducts(){
+       async addProducts() {
+  const categories = await this.categoriesRepository.find();
 
-    // 🔹 PUT /products/:id
-    async updateProductById(id: number, data) {
-        const index = this.products.findIndex(product => product.id === id);
-        if (index === -1) return null;
+  await Promise.all(
+    data.map(async (element) => {
+      const category = categories.find((cat) => cat.name === element.category);
+      if (!category) throw new Error(`La categoría ${element.category} no existe`);
 
-        this.products[index] = { ...this.products[index], ...data };
-        return this.products[index];
-    }
+      const product = new Product();
+      product.name = element.name;
+      product.description = element.description;
+      product.price = element.price;
+      product.stock = element.stock;
+      product.categories = category;
 
-    // 🔹 DELETE /products/:id
-    async deleteProductById(id: number) {
-        const index = this.products.findIndex(product => product.id === id);
-        if (index === -1) return false;
+      await this.productsRepository.save(product); // más directo
+    })
+  );
 
-        this.products.splice(index, 1);
-        return true;
-    }
-
-    
-
-
+  return 'Productos agregados';
 }
+
+
+
+
+    async updateProduct(id: string, product: Product){
+      await this.productsRepository.update(id, product);
+      const updatedProduct = await this.productsRepository.findOneBy({
+        id
+      });
+      return updatedProduct;
+    }
+
+  }

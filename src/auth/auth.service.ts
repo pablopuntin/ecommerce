@@ -14,10 +14,10 @@ async signIn(email: string, password: string) {
       throw new BadRequestException('Email and password are required');
     }
 
-    const user = await this.usersRepository.getCredential(email, password);
+    //const user = await this.usersRepository.getCredential(email, password);
     
 
     // Here you would typically generate a JWT token or session
-    return { message: 'User signed in successfully', user };
-  } 
+    //return { message: 'User signed in successfully', user };
+ } 
 }

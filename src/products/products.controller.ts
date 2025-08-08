@@ -1,48 +1,22 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, HttpCode, Query } from '@nestjs/common';
-import { ProductsService } from './products.service';
-import { UpdateProductDto } from './update-product.dto';
-import { CreateProductDto } from './create-product.dto';
+import { Get, Query } from "@nestjs/common";
+import { ProductsService } from "./products.service";
+import { Controller } from "@nestjs/common";
 
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productService: ProductsService) {}
+  constructor (private readonly productService: ProductsService){}
 
-
-  // 🔹 GET /products
   @Get()
-  getProducts(
-    @Query('page') page: number,
-    @Query('limit') limit: number 
-  ) {
-    return this.productService.getPaginatedProducts(page, limit);
-    
+  getProducts(@Query('page') page:string, @Query('limit')limit: string){
+    if (page && limit)
+      return this.productService.getProducts(Number(page), Number(limit));
+    return this.productService.getProducts(Number(1), Number(5));
   }
 
-
-  // 🔹 GET /products/:id
-  @Get(':id')
-  getProductById(@Param('id') id: string) {
-    
-    return this.productService.getProductById(Number(id));
+  @Get ('seeder')
+  addProducts(){
+    return this.productService.addProducts();
   }
 
-@Post()
-@HttpCode(201)
-createProduct(@Body() data: CreateProductDto) {
-  return this.productService.createProduct(data);
 }
-
-@Put(':id')
-updateProductbyId(@Param('id') id: string, @Body() data: UpdateProductDto) {
-  return this.productService.updateProductById(Number(id), data);
-}
-
-
-  @Delete(':id')
-  deleteProductById(@Param('id') id: string ) {
-    
-    return this.productService.deleteProductById(Number(id)); 
-  }
-}
-

@@ -1,0 +1,202 @@
+[
+  {
+    "name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "password": "123456",
+    "phone": 1155555555,
+    "country": "Argentina",
+    "address": "Av. Siempre Viva 742",
+    "city": "Buenos Aires",
+    "isAdmin": false
+  },
+  {
+    "name": "María López",
+    "email": "maria.lopez@example.com",
+    "password": "abcdef",
+    "phone": 1166666666,
+    "country": "Argentina",
+    "address": "Calle Falsa 123",
+    "city": "Córdoba",
+    "isAdmin": true
+  },
+  {
+    "name": "Carlos Gómez",
+    "email": "carlos.gomez@example.com",
+    "password": "pass1234",
+    "phone": 1133333333,
+    "country": "Uruguay",
+    "address": "Av. Libertad 456",
+    "city": "Montevideo",
+    "isAdmin": false
+  },
+  {
+    "name": "Laura Fernández",
+    "email": "laura.fernandez@example.com",
+    "password": "qwerty",
+    "phone": 1144444444,
+    "country": "Chile",
+    "address": "Calle Sol 789",
+    "city": "Santiago",
+    "isAdmin": false
+  },
+  {
+    "name": "Pedro Martínez",
+    "email": "pedro.martinez@example.com",
+    "password": "123abc",
+    "phone": 1177777777,
+    "country": "Paraguay",
+    "address": "Av. Central 321",
+    "city": "Asunción",
+    "isAdmin": true
+  },
+  {
+    "name": "Sofía Herrera",
+    "email": "sofia.herrera@example.com",
+    "password": "clave789",
+    "phone": 1122222222,
+    "country": "Argentina",
+    "address": "Calle Luna 555",
+    "city": "Rosario",
+    "isAdmin": false
+  },
+  {
+    "name": "Andrés Molina",
+    "email": "andres.molina@example.com",
+    "password": "andres2023",
+    "phone": 1158888888,
+    "country": "Chile",
+    "address": "Av. Andes 888",
+    "city": "Valparaíso",
+    "isAdmin": false
+  },
+  {
+    "name": "Marta Díaz",
+    "email": "marta.diaz@example.com",
+    "password": "marta456",
+    "phone": 1132323232,
+    "country": "Uruguay",
+    "address": "Calle Norte 77",
+    "city": "Salto",
+    "isAdmin": false
+  },
+  {
+    "name": "Jorge Torres",
+    "email": "jorge.torres@example.com",
+    "password": "jorgepass",
+    "phone": 1169696969,
+    "country": "Argentina",
+    "address": "Av. Mar 909",
+    "city": "Mar del Plata",
+    "isAdmin": false
+  },
+  {
+    "name": "Clara Suárez",
+    "email": "clara.suarez@example.com",
+    "password": "clara123",
+    "phone": 1181818181,
+    "country": "Chile",
+    "address": "Calle Verde 101",
+    "city": "La Serena",
+    "isAdmin": false
+  },
+  {
+    "name": "Pablo Castro",
+    "email": "pablo.castro@example.com",
+    "password": "pablo789",
+    "phone": 1155558888,
+    "country": "Paraguay",
+    "address": "Av. del Sol 505",
+    "city": "Encarnación",
+    "isAdmin": false
+  },
+  {
+    "name": "Natalia Romero",
+    "email": "natalia.romero@example.com",
+    "password": "nat123",
+    "phone": 1120202020,
+    "country": "Argentina",
+    "address": "Calle Azul 303",
+    "city": "San Juan",
+    "isAdmin": false
+  },
+  {
+    "name": "Hernán Vargas",
+    "email": "hernan.vargas@example.com",
+    "password": "hvpass",
+    "phone": 1199999999,
+    "country": "Uruguay",
+    "address": "Av. Norte 707",
+    "city": "Paysandú",
+    "isAdmin": false
+  },
+  {
+    "name": "Gabriela Ruiz",
+    "email": "gabriela.ruiz@example.com",
+    "password": "gaby2023",
+    "phone": 1130303030,
+    "country": "Chile",
+    "address": "Calle Estrella 111",
+    "city": "Concepción",
+    "isAdmin": false
+  },
+  {
+    "name": "Ricardo Ortiz",
+    "email": "ricardo.ortiz@example.com",
+    "password": "ric123",
+    "phone": 1140404040,
+    "country": "Argentina",
+    "address": "Av. Central 212",
+    "city": "Santa Fe",
+    "isAdmin": true
+  },
+  {
+    "name": "Verónica Silva",
+    "email": "veronica.silva@example.com",
+    "password": "vero456",
+    "phone": 1151515151,
+    "country": "Paraguay",
+    "address": "Calle Río 818",
+    "city": "Ciudad del Este",
+    "isAdmin": false
+  },
+  {
+    "name": "Diego Medina",
+    "email": "diego.medina@example.com",
+    "password": "dmedina",
+    "phone": 1171717171,
+    "country": "Chile",
+    "address": "Av. Pacífico 343",
+    "city": "Antofagasta",
+    "isAdmin": false
+  },
+  {
+    "name": "Paula Chávez",
+    "email": "paula.chavez@example.com",
+    "password": "paula2024",
+    "phone": 1184848484,
+    "country": "Argentina",
+    "address": "Calle Flor 666",
+    "city": "Mendoza",
+    "isAdmin": false
+  },
+  {
+    "name": "Fernando López",
+    "email": "fernando.lopez@example.com",
+    "password": "flpass",
+    "phone": 1147474747,
+    "country": "Uruguay",
+    "address": "Av. Norte 909",
+    "city": "Colonia",
+    "isAdmin": false
+  },
+  {
+    "name": "Liliana Cabrera",
+    "email": "liliana.cabrera@example.com",
+    "password": "lily123",
+    "phone": 1159595959,
+    "country": "Argentina",
+    "address": "Calle Sur 404",
+    "city": "La Plata",
+    "isAdmin": false
+  }
+]

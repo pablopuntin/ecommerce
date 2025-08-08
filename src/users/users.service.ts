@@ -7,39 +7,39 @@ export class UserService {
   constructor(private usersRepository: UsersRepository) {}
  
  // 🔹 GET /users
-  getPaginatedUsers(page: number, limit: number) {
-    return this.usersRepository.getPaginatedUsers(page, limit);
+  getUsers(page: number, limit: number) {
+    return this.usersRepository.getUsers(page, limit);
   }
  
  
   // 🔹 GET /users/:id
-  getUserById(id: number) {
+  getUserById(id: string) {
     return this.usersRepository.getUserById(id);
 }
 
 // 🔹 GET /users/credential
-getCredential(email: string, password: string) {
+getUserByEmail(email: string, password: string) {
     if (!email || !password) {
       throw new Error('Email and password are required');
     }
-    return this.usersRepository.getCredential(email, password);
+    return this.usersRepository.getUserByEmail(email);
   }
 
   
   // 🔹 POST /users
-  createUser(data) {
-    return this.usersRepository.createUser(data);
+  addUser(data) {
+    return this.usersRepository.addUser(data);
   }
 
   // 🔹 PUT /users/:id
-  updateUserById(id: number, data) {
-    return this.usersRepository.updateUserById(id, data);     
+  updateUser(id: string, data) {
+    return this.usersRepository.updateUser(id, data);     
 
 }
  
   // 🔹 DELETE /users/:id
-  deleteUserById(id: number) {
-    return this.usersRepository.deleteUserById(id);
+  deleteUser(id: string) {
+    return this.usersRepository.deleteUser(id);
   } 
 
 

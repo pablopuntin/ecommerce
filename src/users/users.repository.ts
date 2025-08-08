@@ -1,110 +1,77 @@
 import { Injectable } from "@nestjs/common";
-import { get } from "http";
+import { InjectRepository } from "@nestjs/typeorm";
+import { User } from "./entities/user.entity";
+import { Repository } from "typeorm";
+
 
 @Injectable()
-export class UsersRepository {
-  private users = [
-    {
-      id: 1,
-      email: 'prueba@mail.com',
-      name: 'mario',
-      password: '12po',
-      address: 'calle falsa 123',
-      phone: '123456789',
-      country: 'Argentina',
-      city: 'Buenos Aires',
-    },
-    {
-      id: 2,
-      email: 'otro@mail.com',
-      name: 'lucia',
-      password: 'abcd',
-      address: 'otra calle 456',
-      phone: '987654321',
-      country: 'Argentina',
-      city: 'Córdoba',
-    }
-  ];
+export class UsersRepository{
+  constructor (
+    @InjectRepository(User) private usersRepository: Repository<User>,
+  ){}
 
-    // 🔹 GET /users
-    async getPaginatedUsers(page: number, limit: number) {
-  const start = (page - 1) * limit;
-  const end = start + limit;
+  //usando Pipes
+//   @Get()
+// getUsers(
+//   @Query('page', ParseIntPipe) page: number,
+//   @Query('limit', ParseIntPipe) limit: number,
+// ) {
+//   return this.userService.getUsers(page, limit);
+// }
 
-  const paginated = this.users.slice(start, end);
 
-  return {
-    total: this.users.length,
-    page,
-    limit,
-    data: paginated
-  };
+  async getUsers (page: number, limit: number){
+  //Parseo page y limit porque llegan com string del front
+  const pageNumber = Number(page) || 1;
+  const limitNumber = Number(limit) || 10;
+
+    const skip = (pageNumber-1)* limitNumber;
+    const users = await this.usersRepository.find({
+      //take y skip son propiedades de BD 
+      take: limitNumber,
+      skip: skip,
+    });
+    return users.map(({password, ...userNoPassword})=> userNoPassword);
+  }
+
+  async getUserById(id: string){
+
+    const user = await this.usersRepository.findOne({
+      where:{id},
+      relations:{
+        orders: true,
+      },
+    });
+
+    if(!user)return `No se encontro el usuario con id ${id}`;
+    const {password, ...userNoPassword} = user;
+    return userNoPassword
+  }
+
+  async addUser(user: User){
+    const newUser = await this.usersRepository.save(user);
+    const {password, ...userNoPassword} = newUser;
+    return userNoPassword
+  }
+
+  async updateUser(id: string, user: User){
+    await this,this.usersRepository.update(id, user);
+    const updatedUser = await this.usersRepository.findOneBy({id});
+    if (!updatedUser) throw new Error (`No existe usuario con id ${id}`);
+    const {password, ...userNoPassword} = updatedUser;
+    return userNoPassword;
+  }
+
+  async deleteUser(id: string){
+    const user = await this.usersRepository.findOneBy({id});
+    if (!user) throw new Error (`No existe usuario con id ${id}`);
+    this.usersRepository.remove(user);
+    const {password, ...userNoPassword} = user;
+    return userNoPassword;
+  }
+
+  async getUserByEmail(email: string){
+    return await this.usersRepository.findOneBy({email});
+  }
+
 }
-
-  // 🔹 GET /users/:id
-  async getUserById(id: number) {
-    const user = this.users.find(user => user.id === id);
-    if (!user) return null;
-
-    const { password, ...safeUser } = user;
-    return safeUser;
-  }
-
-  // 🔹 DELETE /users/:id
-  async deleteUserById(id: number) {
-    const index = this.users.findIndex(user => user.id === id);
-    if (index === -1) return false;
-
-    this.users.splice(index, 1);
-    return true;
-  }
-
-    // 🔹 POST /users
-    async createUser(data) {
-    const newUser = {
-      id: this.users.length + 1,
-      ...data,
-    };
-    this.users.push(newUser);
-    return newUser; 
-}
-
-// 🔹 PUT /users/:id
-async updateUserById(id: number, data) {
-  const index = this.users.findIndex(user => user.id === id);
-  if (index === -1) return null;
-
-  const updatedUser = {
-    ...this.users[index],
-    ...data,
-  };
-  this.users[index] = updatedUser;
-  return updatedUser;   
-}
-
-    // 🔹 GET /users/cofee
-    async getCofee() {
-        return 'no se hacer cafe, solo te y mate, jaja';
-    }      
-   
-    async getCredential(email: string, password: string) {
-  if (!email || !password) {
-    throw new Error('Email and password are required');
-  }
-
-  const user = this.users.find(
-    (user) => user.email === email && user.password === password,
-  );
-
-  if (!user) {
-    throw new Error('Invalid credentials');
-  }
-
-  const { password: _, ...safeUser } = user;
-  return safeUser;
-}
-
-
-
-  }
-
