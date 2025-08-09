@@ -40,7 +40,7 @@ let UsersRepository = class UsersRepository {
             },
         });
         if (!user)
-            return `No se encontro el usuario con id ${id}`;
+            throw new common_1.NotFoundException(`No se encontró el usuario con id ${id}`);
         const { password, ...userNoPassword } = user;
         return userNoPassword;
     }
@@ -50,7 +50,7 @@ let UsersRepository = class UsersRepository {
         return userNoPassword;
     }
     async updateUser(id, user) {
-        await this, this.usersRepository.update(id, user);
+        await this.usersRepository.update(id, user);
         const updatedUser = await this.usersRepository.findOneBy({ id });
         if (!updatedUser)
             throw new Error(`No existe usuario con id ${id}`);

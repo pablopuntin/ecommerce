@@ -2,8 +2,10 @@ import { AuthService } from './auth.service';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
-    signIn(dto: {
+    signIn(LoginUserDto: {
         email: string;
         password: string;
-    }): Promise<void>;
+    }): Promise<{
+        access_token: string;
+    }>;
 }

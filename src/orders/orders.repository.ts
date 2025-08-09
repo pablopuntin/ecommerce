@@ -22,73 +22,15 @@ export class OrdersRepository {
         private productsRepository: Repository<Product>,
     ){}
 
-//  async addOrder(userId:string, products: any){
-//      let total = 0;
-//      //verificamos que exista el Usuario:
-//      const user= await this.usersRepository.findOneBy({id:userId});
-//      if (!user){
-//          return `Usuario con id ${userId} no encontrado`
-//      }
 
-//      //creamos la orden:
-//      const order= new Order();
-//      order.date = new Date();
-//      order.user = user;
-
-//      const newOrder = await this.ordersRepository.save(order);
-
-//      //asociamos cada id recibido con el producto:
-//      const productsArray = await Promise.all(
-//          products.map(async(element)=>{
-//              const product = await this.productsRepository.findOneBy
-//              ({
-//                  id: element.id,
-//              });
-      
-//          if(!product){
-//              return `Producto con id ${element.id} no encontrado`;
-    
-//          }
-
-
-//          //calculamos el total:
-//          total += Number(product.price);
-//          //actualizamos el stock
-//          await this.productsRepository.update(
-//              {id: element.id},
-//              {stock: element.stock -1},
-//          );
-//          return products;
-
-//  })
-//      );
-
-//      //creamos "OrderDetail" y la insertamos en la BBDD:
-//      const orderDetail = new OrderDetail();
-
-//      orderDetail.price = Number(Number(total).toFixed(2));
-//      orderDetail.products = productsArray;
-//      orderDetail.order = newOrder;
-//      await this.orderDetailRepository.save(orderDetail);
-
-//      //Enviamos al cliente la compra con la info de productos:
-//      return await this.ordersRepository.find({
-//          where: {id: newOrder.id},
-//          relations: {
-//              orderDetails: true,
-//          },
-//      });
-//      }
-
-//codigo chatgpt
 async addOrder(userId: string, products: { id: string }[]) {
     let total = 0;
 
     // Verificamos usuario
     const user = await this.usersRepository.findOneBy({ id: userId });
     if (!user) {
-        return `Usuario con id ${userId} no encontrado`;
-    }
+          throw new Error(`Usuario con id ${userId} no encontrado`);
+            }
 
     // Creamos orden
     const order = new Order();
@@ -101,7 +43,7 @@ async addOrder(userId: string, products: { id: string }[]) {
         products.map(async (element) => {
             const product = await this.productsRepository.findOneBy({ id: element.id });
             if (!product) {
-                throw new Error(`Producto con id ${element.id} no encontrado`);
+                throw new NotFoundException(`Producto con id ${element.id} no encontrado`);
             }
 
             total += Number(product.price);
@@ -157,7 +99,7 @@ async addOrder(userId: string, products: { id: string }[]) {
       
       //Validamos que encuentre la roden, de otra forma devuelve undefined y no se debe 
       if(!order){
-        return `Orden con id ${id} no encontrada`;
+        throw new ErrorEvent(`Orden con id ${id} no encontrada`);
       }
       return order;
     }

@@ -11,6 +11,6 @@ export declare class OrdersRepository {
     constructor(ordersRepository: Repository<Order>, orderDetailRepository: Repository<OrderDetail>, usersRepository: Repository<User>, productsRepository: Repository<Product>);
     addOrder(userId: string, products: {
         id: string;
-    }[]): Promise<string | Order[]>;
-    getOrder(id: string): Promise<string | Order>;
+    }[]): Promise<Order[]>;
+    getOrder(id: string): Promise<Order>;
 }

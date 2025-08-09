@@ -21,6 +21,9 @@ let UserService = class UserService {
         return this.usersRepository.getUsers(page, limit);
     }
     getUserById(id) {
+        if (!id) {
+            throw new common_1.NotFoundException(`Usuario con id ${id} no encontrado`);
+        }
         return this.usersRepository.getUserById(id);
     }
     getUserByEmail(email, password) {
@@ -29,13 +32,16 @@ let UserService = class UserService {
         }
         return this.usersRepository.getUserByEmail(email);
     }
-    addUser(data) {
-        return this.usersRepository.addUser(data);
+    addUser(user) {
+        return this.usersRepository.addUser(user);
     }
-    updateUser(id, data) {
-        return this.usersRepository.updateUser(id, data);
+    updateUser(id, user) {
+        return this.usersRepository.updateUser(id, user);
     }
     deleteUser(id) {
+        if (!id) {
+            throw new common_1.NotFoundException(`Usuario con id ${id} no encontrado`);
+        }
         return this.usersRepository.deleteUser(id);
     }
 };

@@ -20,8 +20,8 @@ let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
-    signIn(dto) {
-        return this.authService.signIn(dto.email, dto.password);
+    signIn(LoginUserDto) {
+        return this.authService.signIn(LoginUserDto.email, LoginUserDto.password);
     }
 };
 exports.AuthController = AuthController;

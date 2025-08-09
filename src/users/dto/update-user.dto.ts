@@ -1,16 +1,37 @@
 import { PartialType } from '@nestjs/mapped-types';
-import {CreateUserDto} from './create-user.dto'
+import {CreateUserDto} from './users.dto'
 import { IsOptional, IsString } from 'class-validator';
+import { Order } from 'src/orders/entities/order.entity';
 
 export class UpdateusertDto extends PartialType(CreateUserDto) {
-     @IsOptional()
-  @IsString()
-  country?: string;
+  //datos que no llegan por body, el id y Orders de la relacion con Order
+  id: string;
+  orders: Order[];
+
 
   @IsOptional()
   @IsString()
-  city?: string;
+  country: string;
 
+  @IsOptional()
+  @IsString()
+  city: string;
+
+  @IsOptional()
+  @IsString()
+  name: string;
+
+  @IsOptional()
+  @IsString()
+  email: string;
+
+  @IsOptional()
+  @IsString()
+  password: string;
+
+  @IsOptional()
+  @IsString()
+  phone : number;
   // Aquí puedes agregar propiedades adicionales si es necesario
   // o dejarlo vacío si solo quieres que sea un DTO parcial de CreateProductDto
 }

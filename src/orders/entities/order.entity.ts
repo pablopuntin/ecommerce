@@ -19,7 +19,7 @@ export class Order {
 
     //relacion 1:1 con orderDetails
     @OneToOne(() => OrderDetail, orderDetails => orderDetails.order)
-    @JoinColumn({name: 'order_detail_id'})
+    
     orderDetails: OrderDetail;
     
 

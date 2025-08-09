@@ -6,13 +6,11 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+ @Post('signin')
+ signIn(@Body() LoginUserDto: { email: string; password: string }) {
+   return this.authService.signIn(LoginUserDto.email, LoginUserDto.password);
+ }
 
-
-
-@Post('signin')
-signIn(@Body() dto: { email: string; password: string }) {
-  return this.authService.signIn(dto.email, dto.password);
-}
 
 
 }

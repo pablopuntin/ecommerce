@@ -17,6 +17,7 @@ export class User {
     @Column({ type: 'varchar', length: 50 })
     email: string;
 
+    //ya trae por defecto nullable: false
     @Column({ type: 'varchar', length: 20, nullable: false })
     password: string;
 

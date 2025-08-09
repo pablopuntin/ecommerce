@@ -1,5 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UsersRepository } from './users.repository';
+import { CreateUserDto } from './dto/users.dto';
+import { User } from './entities/user.entity';
+import { UpdateusertDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -13,9 +16,13 @@ export class UserService {
  
  
   // 🔹 GET /users/:id
+  
   getUserById(id: string) {
-    return this.usersRepository.getUserById(id);
+    if(!id){
+    throw new NotFoundException (`Usuario con id ${id} no encontrado`)
 }
+return this.usersRepository.getUserById(id)
+  }
 
 // 🔹 GET /users/credential
 getUserByEmail(email: string, password: string) {
@@ -27,22 +34,22 @@ getUserByEmail(email: string, password: string) {
 
   
   // 🔹 POST /users
-  addUser(data) {
-    return this.usersRepository.addUser(data);
+  addUser(user: User) {
+    return this.usersRepository.addUser(user);
   }
 
   // 🔹 PUT /users/:id
-  updateUser(id: string, data) {
-    return this.usersRepository.updateUser(id, data);     
-
+  updateUser(id: string, user: UpdateusertDto) {
+    return this.usersRepository.updateUser(id, user);     
 }
  
   // 🔹 DELETE /users/:id
   deleteUser(id: string) {
+    if(!id){
+    throw new NotFoundException (`Usuario con id ${id} no encontrado`)
+}
     return this.usersRepository.deleteUser(id);
   } 
-
-
 
 
 }

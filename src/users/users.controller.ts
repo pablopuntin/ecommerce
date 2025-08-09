@@ -1,7 +1,10 @@
-import { Controller, Delete, Get, HttpCode, Post, Put, Param, Body,Query } from '@nestjs/common';
+import { Controller, Delete, Get, HttpCode, Post, Put, Param, Body,Query, ParseUUIDPipe } from '@nestjs/common';
 import { UserService } from './users.service';
 import { AuthGuard } from 'src/auth/auth.guard';  
 import { UseGuards } from '@nestjs/common';
+import { User } from './entities/user.entity';
+import { CreateUserDto } from './dto/users.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Controller('users')
 export class UsersController {
@@ -16,6 +19,7 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard)
+  @Get('credentials')
   getUserByEmail(
     @Query('email') email: string,
     @Query('password') name: string,
@@ -26,7 +30,7 @@ export class UsersController {
   //para un id, por ejemplo get/1
   @UseGuards(AuthGuard)
   @Get(':id')
-  getUserById(@Param('id') id: string ) {
+  getUserById(@Param('id', ParseUUIDPipe) id: string ) {
     return this.userService.getUserById((id));
   }
 
@@ -43,20 +47,20 @@ export class UsersController {
 
   @Post()
   @HttpCode(201) // 201 Created
-  addUser(@Body()data) {
-   
-   return this.userService.addUser(data);
+  addUser(@Body()userDto: CreateUserDto) {
+    const user= plainToInstance(User, userDto);
+   return this.userService.addUser(user);
   }
 
   @UseGuards(AuthGuard)
   @Put(':id')
-  updateUser(@Body() data, @Param('id') id: string) {
-    return this.userService.updateUser((id), data);
+  updateUser(@Body() user: User, @Param('id', ParseUUIDPipe) id: string) {
+    return this.userService.updateUser((id), user);
   }
 
   @UseGuards(AuthGuard)
   @Delete(':id')
-  deleteUser(@Param('id') id: string) {
+  deleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.deleteUser((id));
   }
 }

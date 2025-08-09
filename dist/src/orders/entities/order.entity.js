@@ -35,7 +35,6 @@ __decorate([
 ], Order.prototype, "user", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => orderDetails_entity_1.OrderDetail, orderDetails => orderDetails.order),
-    (0, typeorm_1.JoinColumn)({ name: 'order_detail_id' }),
     __metadata("design:type", orderDetails_entity_1.OrderDetail)
 ], Order.prototype, "orderDetails", void 0);
 exports.Order = Order = __decorate([

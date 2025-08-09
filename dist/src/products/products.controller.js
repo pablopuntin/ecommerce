@@ -40,7 +40,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "getProducts", null);
 __decorate([
-    (0, common_1.Get)('seeder'),
+    (0, common_1.Post)('seeder'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)

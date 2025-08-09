@@ -1,4 +1,6 @@
 import { UsersRepository } from './users.repository';
+import { User } from './entities/user.entity';
+import { UpdateusertDto } from './dto/update-user.dto';
 export declare class UserService {
     private usersRepository;
     constructor(usersRepository: UsersRepository);
@@ -13,7 +15,7 @@ export declare class UserService {
         isAdmin: boolean;
         orders: import("../orders/entities/order.entity").Order[];
     }[]>;
-    getUserById(id: string): Promise<string | {
+    getUserById(id: string): Promise<{
         id: string;
         name: string;
         email: string;
@@ -24,8 +26,8 @@ export declare class UserService {
         isAdmin: boolean;
         orders: import("../orders/entities/order.entity").Order[];
     }>;
-    getUserByEmail(email: string, password: string): Promise<import("./entities/user.entity").User | null>;
-    addUser(data: any): Promise<{
+    getUserByEmail(email: string, password: string): Promise<User | null>;
+    addUser(user: User): Promise<{
         id: string;
         name: string;
         email: string;
@@ -36,7 +38,7 @@ export declare class UserService {
         isAdmin: boolean;
         orders: import("../orders/entities/order.entity").Order[];
     }>;
-    updateUser(id: string, data: any): Promise<{
+    updateUser(id: string, user: UpdateusertDto): Promise<{
         id: string;
         name: string;
         email: string;

@@ -41,7 +41,8 @@ export class ProductsRepository{
   await Promise.all(
     data.map(async (element) => {
       const category = categories.find((cat) => cat.name === element.category);
-      if (!category) throw new Error(`La categoría ${element.category} no existe`);
+      if (!category) 
+        throw new Error(`La categoría ${element.category} no existe`);
 
       const product = new Product();
       product.name = element.name;

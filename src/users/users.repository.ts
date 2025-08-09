@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
@@ -9,15 +9,6 @@ export class UsersRepository{
   constructor (
     @InjectRepository(User) private usersRepository: Repository<User>,
   ){}
-
-  //usando Pipes
-//   @Get()
-// getUsers(
-//   @Query('page', ParseIntPipe) page: number,
-//   @Query('limit', ParseIntPipe) limit: number,
-// ) {
-//   return this.userService.getUsers(page, limit);
-// }
 
 
   async getUsers (page: number, limit: number){
@@ -43,7 +34,9 @@ export class UsersRepository{
       },
     });
 
-    if(!user)return `No se encontro el usuario con id ${id}`;
+    if(!user) 
+      throw new NotFoundException(`No se encontró el usuario con id ${id}`);
+
     const {password, ...userNoPassword} = user;
     return userNoPassword
   }
@@ -54,10 +47,11 @@ export class UsersRepository{
     return userNoPassword
   }
 
-  async updateUser(id: string, user: User){
-    await this,this.usersRepository.update(id, user);
+  async updateUser(id: string, user: Partial<User>){
+    await this.usersRepository.update(id, user);
     const updatedUser = await this.usersRepository.findOneBy({id});
-    if (!updatedUser) throw new Error (`No existe usuario con id ${id}`);
+    if (!updatedUser) 
+      throw new Error (`No existe usuario con id ${id}`);
     const {password, ...userNoPassword} = updatedUser;
     return userNoPassword;
   }

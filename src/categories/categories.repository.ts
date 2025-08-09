@@ -31,21 +31,5 @@ export class CategoriesRepository {
   return 'Categorias agregadas'
   }
 
-//prueba codigo gpt
-// async addCategories() {
-//   const values = data.map((el) => ({ name: el.category }));
-
-//   await this.categoriesRepository
-//     .createQueryBuilder()
-//     .insert()
-//     .into(Categories)
-//     .values(values)
-//     .orIgnore()
-//     .execute();
-
-//   return 'Categorías agregadas';
-// }
-
-
 
 }

@@ -35,7 +35,7 @@ let OrdersRepository = class OrdersRepository {
         let total = 0;
         const user = await this.usersRepository.findOneBy({ id: userId });
         if (!user) {
-            return `Usuario con id ${userId} no encontrado`;
+            throw new Error(`Usuario con id ${userId} no encontrado`);
         }
         const order = new order_entity_1.Order();
         order.date = new Date();
@@ -44,7 +44,7 @@ let OrdersRepository = class OrdersRepository {
         const productsArray = await Promise.all(products.map(async (element) => {
             const product = await this.productsRepository.findOneBy({ id: element.id });
             if (!product) {
-                throw new Error(`Producto con id ${element.id} no encontrado`);
+                throw new common_1.NotFoundException(`Producto con id ${element.id} no encontrado`);
             }
             total += Number(product.price);
             const currentStock = Number(product.stock);
@@ -78,7 +78,7 @@ let OrdersRepository = class OrdersRepository {
             },
         });
         if (!order) {
-            return `Orden con id ${id} no encontrada`;
+            throw new ErrorEvent(`Orden con id ${id} no encontrada`);
         }
         return order;
     }
