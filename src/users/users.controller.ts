@@ -5,6 +5,7 @@ import { UseGuards } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/users.dto';
 import { plainToInstance } from 'class-transformer';
+import { UpdateusertDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -28,8 +29,8 @@ export class UsersController {
   }
 
   //para un id, por ejemplo get/1
-  @UseGuards(AuthGuard)
   @Get(':id')
+  @UseGuards(AuthGuard)
   getUserById(@Param('id', ParseUUIDPipe) id: string ) {
     return this.userService.getUserById((id));
   }
@@ -52,14 +53,14 @@ export class UsersController {
    return this.userService.addUser(user);
   }
 
-  @UseGuards(AuthGuard)
   @Put(':id')
-  updateUser(@Body() user: User, @Param('id', ParseUUIDPipe) id: string) {
+  @UseGuards(AuthGuard)
+  updateUser(@Body() user: UpdateusertDto, @Param('id', ParseUUIDPipe) id: string) {
     return this.userService.updateUser((id), user);
   }
 
-  @UseGuards(AuthGuard)
   @Delete(':id')
+  @UseGuards(AuthGuard)
   deleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.deleteUser((id));
   }

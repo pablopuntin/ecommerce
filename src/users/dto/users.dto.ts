@@ -1,4 +1,4 @@
-import { IsString, IsBoolean, IsNumber, IsUrl, IsNotEmpty, MinLength, MaxLength, IsEmail, IsStrongPassword, Matches, IsOptional } from "class-validator";
+import { IsString, IsBoolean, IsNumber, IsUrl, IsNotEmpty, MinLength, MaxLength, IsEmail, IsStrongPassword, Matches, IsOptional} from "class-validator";
 import { Order } from "src/orders/entities/order.entity";
 
 export class CreateUserDto {
@@ -15,6 +15,8 @@ export class CreateUserDto {
     email: string;
 
   @IsNotEmpty()
+  @MinLength(8)
+  @MaxLength(50)
   @IsStrongPassword({
     minLowercase: 1,
     minUppercase: 1,

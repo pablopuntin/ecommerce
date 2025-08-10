@@ -36,6 +36,8 @@ __decorate([
 ], CreateUserDto.prototype, "email", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.MinLength)(8),
+    (0, class_validator_1.MaxLength)(50),
     (0, class_validator_1.IsStrongPassword)({
         minLowercase: 1,
         minUppercase: 1,

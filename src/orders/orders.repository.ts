@@ -69,7 +69,7 @@ async addOrder(userId: string, products: { id: string }[]) {
 
     // Creamos orderDetail
     const orderDetail = new OrderDetail();
-    orderDetail.price = Number(total.toFixed(2));
+    orderDetail.price = Number(Number(total).toFixed(2));
     orderDetail.products = productsArray;
     orderDetail.order = newOrder;
 

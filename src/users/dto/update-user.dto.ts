@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/mapped-types';
 import {CreateUserDto} from './users.dto'
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, IsNotEmpty, IsStrongPassword, MaxLength, MinLength } from 'class-validator';
 import { Order } from 'src/orders/entities/order.entity';
 
 export class UpdateusertDto extends PartialType(CreateUserDto) {
@@ -25,9 +25,23 @@ export class UpdateusertDto extends PartialType(CreateUserDto) {
   @IsString()
   email: string;
 
-  @IsOptional()
-  @IsString()
-  password: string;
+ @IsNotEmpty()
+ @MinLength(8)
+   @MaxLength(50)
+   @IsStrongPassword({
+     minLowercase: 1,
+     minUppercase: 1,
+     minNumbers: 1,
+     minSymbols: 1,},
+     {
+       message: `La contraseña debe contener al menos:
+     - 1 letra minúscula
+     - 1 letra mayúscula
+     - 1 número
+     - 1 símbolo`
+     
+   })
+   password: string;
 
   @IsOptional()
   @IsString()

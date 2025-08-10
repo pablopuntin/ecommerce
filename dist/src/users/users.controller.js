@@ -20,6 +20,7 @@ const common_2 = require("@nestjs/common");
 const user_entity_1 = require("./entities/user.entity");
 const users_dto_1 = require("./dto/users.dto");
 const class_transformer_1 = require("class-transformer");
+const update_user_dto_1 = require("./dto/update-user.dto");
 let UsersController = class UsersController {
     userService;
     constructor(userService) {
@@ -67,8 +68,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUserByEmail", null);
 __decorate([
-    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)(':id'),
+    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -91,17 +92,17 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "addUser", null);
 __decorate([
-    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Put)(':id'),
+    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_entity_1.User, String]),
+    __metadata("design:paramtypes", [update_user_dto_1.UpdateusertDto, String]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "updateUser", null);
 __decorate([
-    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Delete)(':id'),
+    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

@@ -9,41 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateusertDto = void 0;
-const mapped_types_1 = require("@nestjs/mapped-types");
-const users_dto_1 = require("./users.dto");
+exports.LoginUserDto = void 0;
 const class_validator_1 = require("class-validator");
-class UpdateusertDto extends (0, mapped_types_1.PartialType)(users_dto_1.CreateUserDto) {
-    id;
-    orders;
-    country;
-    city;
-    name;
+class LoginUserDto {
     email;
     password;
-    phone;
 }
-exports.UpdateusertDto = UpdateusertDto;
+exports.LoginUserDto = LoginUserDto;
 __decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.MaxLength)(50),
+    (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
-], UpdateusertDto.prototype, "country", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], UpdateusertDto.prototype, "city", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], UpdateusertDto.prototype, "name", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], UpdateusertDto.prototype, "email", void 0);
+], LoginUserDto.prototype, "email", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(8),
@@ -55,16 +33,11 @@ __decorate([
         minSymbols: 1,
     }, {
         message: `La contraseña debe contener al menos:
-     - 1 letra minúscula
-     - 1 letra mayúscula
-     - 1 número
-     - 1 símbolo`
+        - 1 letra minúscula
+        - 1 letra mayúscula
+        - 1 número
+        - 1 símbolo`
     }),
     __metadata("design:type", String)
-], UpdateusertDto.prototype, "password", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", Number)
-], UpdateusertDto.prototype, "phone", void 0);
-//# sourceMappingURL=update-user.dto.js.map
+], LoginUserDto.prototype, "password", void 0);
+//# sourceMappingURL=login.user.dto.js.map

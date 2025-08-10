@@ -13,10 +13,11 @@ const products_module_1 = require("./products/products.module");
 const auth_module_1 = require("./auth/auth.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const config_1 = require("@nestjs/config");
-const typeorm_config_1 = require("./database/typeorm.config");
+const typeorm_config_1 = require("../config/typeorm.config");
 const categories_module_1 = require("./categories/categories.module");
 const orders_module_1 = require("./orders/orders.module");
 const order_details_module_1 = require("./order-details/order-details.module");
+const file_upload_module_1 = require("./file-upload/file-upload.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -24,7 +25,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [config_1.ConfigModule.forRoot({ isGlobal: true }),
             typeorm_1.TypeOrmModule.forRootAsync(typeorm_config_1.typeOrmConfigAsync),
-            users_module_1.UsersModule, products_module_1.ProductsModule, auth_module_1.AuthModule, categories_module_1.CategoriesModule, orders_module_1.OrdersModule, order_details_module_1.OrderDetailsModule],
+            users_module_1.UsersModule, products_module_1.ProductsModule, auth_module_1.AuthModule, categories_module_1.CategoriesModule, orders_module_1.OrdersModule, order_details_module_1.OrderDetailsModule, file_upload_module_1.FileUploadModule],
         controllers: [],
         providers: [],
     })
