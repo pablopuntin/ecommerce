@@ -5,5 +5,5 @@ export declare class FileUploadService {
     private readonly fileUploadRepository;
     private readonly productRepository;
     constructor(fileUploadRepository: FileUploadRepository, productRepository: Repository<Product>);
-    uploadImage(file: Express.Multer.File, productId: string): Promise<import("typeorm").UpdateResult>;
+    uploadImage(file: Express.Multer.File, productId: string): Promise<Product | null>;
 }

@@ -1,56 +1,52 @@
 
-// import { Injectable, BadRequestException } from '@nestjs/common';
-// import { UsersRepository } from 'src/users/users.repository';
+ import { Injectable, BadRequestException } from '@nestjs/common';
+import { User } from 'src/users/entities/user.entity';
+ import { UsersRepository } from 'src/users/users.repository';
+ import * as bcrypt from 'bcrypt';
 
 
-// @Injectable()
-// export class AuthService {
-//   constructor(private readonly usersRepository: UsersRepository) {}
-    
-// async signIn(email: string, password: string) {
-//     if (!email || !password) {
-//       throw new BadRequestException('Email and password are required');
-//     }
+ @Injectable()
+ export class AuthService {
+   constructor(private readonly usersRepository: UsersRepository) {}
 
-//     //const user = await this.usersRepository.getCredential(email, password);
-    
+   getAuth(){
+    return 'Autenticacion'
+   }
 
-//     // Here you would typically generate a JWT token or session
-//     //return { message: 'User signed in successfully', user };
-//  } 
-// }
+   //Registro
+   async signUp(user:Partial<User>){
+        const {email, password} = user;
+        //*Verificar que no exista el usuario que se quiere registrar
+        if (!email || !password)
+          throw new BadRequestException('se necesita mail y password');
+        const foundUser = await this.usersRepository.getUserByEmail(email);
+        if (foundUser)   throw new BadRequestException('email ya registrado');
 
-//codigo chatgpt
-import { JwtService } from '@nestjs/jwt';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import * as bcrypt from 'bcryptjs';
-import { UsersRepository } from 'src/users/users.repository';
+        //hashear el password
+        const hashedPassword = await bcrypt.hash(password, 8)
+        if (!hashedPassword)  throw new BadRequestException('no se pudo encriptar el password');
+        //creamos el usuario en bd
+      return  await this.usersRepository.addUser({
+          ...user,
+          password: hashedPassword
+        })
 
-@Injectable()
-export class AuthService {
-  constructor(
-    private readonly usersRepository: UsersRepository,
-    private readonly jwtService: JwtService,
-  ) {}
 
-  async signIn(email: string, password: string) {
-  const user = await this.usersRepository.getUserByEmail(email);
-  if (!user) {
-    throw new UnauthorizedException('Email o contraseña inválidos');
-  }
+      }
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) {
-    throw new UnauthorizedException('Email o contraseña inválidos');
-  }
 
-  const payload = { email: user.email, sub: user.id };
-  const token = this.jwtService.sign(payload);
+  //Login
+ async signIn(email: string, password: string) {
+     if (!email || !password) 
+       throw new BadRequestException('Email and password are required');
+     
+       const user = this.usersRepository.getUserByEmail(email);
 
-  console.log('Token generado:', token);  // <-- para debug
+       return 'usuario logueado (TOKEN)'
+      }
+      
+      
 
-  return {
-    access_token: token,
-  };
-}
-}
+
+    }
+  

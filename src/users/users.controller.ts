@@ -2,21 +2,24 @@ import { Controller, Delete, Get, HttpCode, Post, Put, Param, Body,Query, ParseU
 import { UserService } from './users.service';
 import { AuthGuard } from 'src/auth/auth.guard';  
 import { UseGuards } from '@nestjs/common';
-import { User } from './entities/user.entity';
-import { CreateUserDto } from './dto/users.dto';
-import { plainToInstance } from 'class-transformer';
 import { UpdateusertDto } from './dto/update-user.dto';
+import { CreateUserDto } from './dto/users.dto';
+import { from } from 'form-data';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @UseGuards(AuthGuard)
   getUsers(
-     @Query('page') page: number,
-        @Query('limit') limit: number 
-  ) {
-    return this.userService.getUsers(page, limit);
+     @Query('page') page?: string,
+        @Query('limit') limit?: string) {
+          //si se envian
+          if (page && limit)
+    return this.userService.getUsers(Number(page), Number(limit));
+          //si no se envian
+          return this.userService.getUsers(1, 5);
   }
 
   @UseGuards(AuthGuard)
@@ -29,8 +32,8 @@ export class UsersController {
   }
 
   //para un id, por ejemplo get/1
-  @Get(':id')
   @UseGuards(AuthGuard)
+  @Get(':id')
   getUserById(@Param('id', ParseUUIDPipe) id: string ) {
     return this.userService.getUserById((id));
   }
@@ -46,18 +49,23 @@ export class UsersController {
     //return this.userService.getCofee();
   }
 
-  @Post()
-  @HttpCode(201) // 201 Created
-  addUser(@Body()userDto: CreateUserDto) {
-    const user= plainToInstance(User, userDto);
-   return this.userService.addUser(user);
-  }
+  // @HttpCode(201) // 201 Created
+  // @Post()
+  // addUser(@Body()user: CreateUserDto) {
+  //     return this.userService.addUser(user);
+  // }
 
   @Put(':id')
   @UseGuards(AuthGuard)
-  updateUser(@Body() user: UpdateusertDto, @Param('id', ParseUUIDPipe) id: string) {
-    return this.userService.updateUser((id), user);
+  updateUser(
+    @Param('id', ParseUUIDPipe)id: string,
+    @Body()user: UpdateusertDto,
+  ){
+    return this.userService.updateUser(id, user);
   }
+  
+  
+  
 
   @Delete(':id')
   @UseGuards(AuthGuard)

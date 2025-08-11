@@ -30,7 +30,17 @@ __decorate([
     (0, common_1.Post)('uploadImage/:id'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
     __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.UploadedFile)()),
+    __param(1, (0, common_1.UploadedFile)(new common_1.ParseFilePipe({
+        validators: [
+            new common_1.MaxFileSizeValidator({
+                maxSize: 200000,
+                message: 'supera el maximo permitido (220 kb)'
+            }),
+            new common_1.FileTypeValidator({
+                fileType: /(.jpg|.png|.webp|.jpeg)/
+            }),
+        ],
+    }))),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)

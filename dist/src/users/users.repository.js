@@ -23,11 +23,9 @@ let UsersRepository = class UsersRepository {
         this.usersRepository = usersRepository;
     }
     async getUsers(page, limit) {
-        const pageNumber = Number(page) || 1;
-        const limitNumber = Number(limit) || 10;
-        const skip = (pageNumber - 1) * limitNumber;
+        const skip = (page - 1) * limit;
         const users = await this.usersRepository.find({
-            take: limitNumber,
+            take: limit,
             skip: skip,
         });
         return users.map(({ password, ...userNoPassword }) => userNoPassword);

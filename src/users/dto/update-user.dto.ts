@@ -27,7 +27,7 @@ export class UpdateusertDto extends PartialType(CreateUserDto) {
 
  @IsNotEmpty()
  @MinLength(8)
-   @MaxLength(50)
+   @MaxLength(70)
    @IsStrongPassword({
      minLowercase: 1,
      minUppercase: 1,

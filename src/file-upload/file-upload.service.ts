@@ -3,7 +3,7 @@ import { FileUploadRepository } from './file-upload.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from 'src/products/entities/product.entity';
 import { Repository } from 'typeorm';
-import { UpdateProductDto } from '../products/update-product.dto';
+import { UpdateProductDto } from '../products/dto/update-product.dto';
  
 
 @Injectable()
@@ -33,11 +33,16 @@ async uploadImage(file: Express.Multer.File, productId: string){
     }   
 
     //*Modificar el producto con la nueva img
-   const updateProduc = await this.productRepository.update(productId,{
+    await this.productRepository.update(productId,{
        imgURL : response.secure_url,
     });
     
-    return updateProduc;
+    //*traigo el producto modificado
+    const updateProduct = await this.productRepository.findOneBy({
+        id: productId,
+    });
+    
+    return updateProduct;
 
 }
 

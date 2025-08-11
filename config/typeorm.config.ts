@@ -13,10 +13,10 @@ export const typeOrmConfigAsync = {
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_NAME'),
-    logging: false,
+    logging: true,
     entities: ['dist/**/*.entity.{ts,js}'],
-    synchronize: false, // true solo en desarrollo
-    dropSchema: false, // no eliminar esquemas al reiniciar
+    synchronize: true, // true solo en desarrollo
+    dropSchema: true, // no eliminar esquemas al reiniciar
     migrations: ['dist/migrations/*.{ts,js}'],
     migrationsTableName: 'migrations',
   }),

@@ -25,7 +25,7 @@ export declare class UsersRepository {
         isAdmin: boolean;
         orders: import("../orders/entities/order.entity").Order[];
     }>;
-    addUser(user: User): Promise<{
+    addUser(user: Partial<User>): Promise<{
         id: string;
         name: string;
         email: string;

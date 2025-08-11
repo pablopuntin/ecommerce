@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
+import { CreateUserDto } from "./dto/users.dto";
 
 
 @Injectable()
@@ -13,13 +14,11 @@ export class UsersRepository{
 
   async getUsers (page: number, limit: number){
   //Parseo page y limit porque llegan com string del front
-  const pageNumber = Number(page) || 1;
-  const limitNumber = Number(limit) || 10;
-
-    const skip = (pageNumber-1)* limitNumber;
+    const skip = (page-1)* limit;
     const users = await this.usersRepository.find({
+
       //take y skip son propiedades de BD 
-      take: limitNumber,
+      take: limit,
       skip: skip,
     });
     return users.map(({password, ...userNoPassword})=> userNoPassword);
@@ -41,11 +40,20 @@ export class UsersRepository{
     return userNoPassword
   }
 
-  async addUser(user: User){
-    const newUser = await this.usersRepository.save(user);
-    const {password, ...userNoPassword} = newUser;
-    return userNoPassword
+  // async addUser(user: CreateUserDto){
+  //   const newUser = await this.usersRepository.save(user);
+  //   const {password, ...userNoPassword} = newUser;
+  //   return userNoPassword
+  // }
+
+  //usando dto
+  async addUser (user: Partial<User>){
+       const newUser = await this.usersRepository.save(user);
+    //retorna el usuario sin la contraseña
+    const {password, ...userNoPassword}= newUser;
+    return userNoPassword;
   }
+
 
   async updateUser(id: string, user: Partial<User>){
     await this.usersRepository.update(id, user);

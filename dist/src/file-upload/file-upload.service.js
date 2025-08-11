@@ -34,10 +34,13 @@ let FileUploadService = class FileUploadService {
         if (!response.secure_url) {
             throw new common_1.NotFoundException('Error al cargar imagenes en Coludinary');
         }
-        const updateProduc = await this.productRepository.update(productId, {
+        await this.productRepository.update(productId, {
             imgURL: response.secure_url,
         });
-        return updateProduc;
+        const updateProduct = await this.productRepository.findOneBy({
+            id: productId,
+        });
+        return updateProduct;
     }
 };
 exports.FileUploadService = FileUploadService;

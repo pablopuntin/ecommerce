@@ -1,4 +1,7 @@
 import { CanActivate, ExecutionContext } from "@nestjs/common";
+import { UserService } from "src/users/users.service";
 export declare class AuthGuard implements CanActivate {
-    canActivate(context: ExecutionContext): boolean;
+    private readonly userService;
+    constructor(userService: UserService);
+    canActivate(context: ExecutionContext): Promise<boolean>;
 }
