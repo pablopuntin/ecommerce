@@ -1,9 +1,20 @@
 // src/middlewares/logger.middleware.ts
 
-import { Request, Response, NextFunction } from 'express';
+import { Injectable, NestMiddleware } from "@nestjs/common";
+import { NextFunction, Response, Request } from "express";
 
-export function logger(req: Request, res: Response, next: NextFunction) {
-  const fechaHora = new Date().toISOString();
-  console.log(`se accedio a las : [${fechaHora}] con el metodo: ${req.method} en la ruta: ${req.originalUrl}`);
-  next();
+@Injectable()
+export class LoggerMiddeleware implements NestMiddleware{
+  use(req: Request, res: Response, next: NextFunction){
+    
+    
+    const {method, ip, originalUrl}= req;
+    
+    const actualDate = new Date();
+    const date = actualDate.toLocaleDateString();
+    const time = actualDate.toLocaleTimeString();
+
+    console.log(`se ejecuto un ${method} ${originalUrl} [${date} - ${time}] -ip: ${ip}`)
+    next()
+  }
 }

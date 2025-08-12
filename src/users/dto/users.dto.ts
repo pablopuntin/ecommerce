@@ -1,5 +1,7 @@
-import { IsString, IsBoolean, IsNumber, IsUrl, IsNotEmpty, MinLength, MaxLength, IsEmail, IsStrongPassword, Matches, IsOptional} from "class-validator";
+import { IsString, IsBoolean, IsNumber, IsUrl, IsNotEmpty, MinLength, MaxLength, IsEmail, IsStrongPassword, Validate, IsOptional,} from "class-validator";
+import { MatchPassword } from "src/decorators/matchPassword.decorators";
 import { Order } from "src/orders/entities/order.entity";
+
 
 export class CreateUserDto {
    
@@ -10,6 +12,7 @@ export class CreateUserDto {
   @MaxLength(50)
   name: string;
 
+  @IsNotEmpty()
   @IsEmail()
   @MaxLength(50)
     email: string;
@@ -31,6 +34,10 @@ export class CreateUserDto {
     
   })
   password: string;
+
+  @IsNotEmpty()
+  @Validate(MatchPassword, ['password'])
+  confirmPassword: string
   
     @IsString()
     @IsNotEmpty()
@@ -55,6 +62,6 @@ export class CreateUserDto {
 
     @IsBoolean()
     @IsOptional()
-    isAdmin: boolean;
+    isAdmin?: boolean;
 
 }

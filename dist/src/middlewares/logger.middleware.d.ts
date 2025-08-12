@@ -1,2 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
-export declare function logger(req: Request, res: Response, next: NextFunction): void;
+import { NestMiddleware } from "@nestjs/common";
+import { NextFunction, Response, Request } from "express";
+export declare class LoggerMiddeleware implements NestMiddleware {
+    use(req: Request, res: Response, next: NextFunction): void;
+}

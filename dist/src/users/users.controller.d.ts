@@ -26,7 +26,6 @@ export declare class UsersController {
         isAdmin: boolean;
         orders: import("../orders/entities/order.entity").Order[];
     }>;
-    getCofee(): string;
     updateUser(id: string, user: UpdateusertDto): Promise<{
         id: string;
         name: string;

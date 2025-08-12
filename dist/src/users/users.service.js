@@ -32,9 +32,6 @@ let UserService = class UserService {
         }
         return this.usersRepository.getUserByEmail(email);
     }
-    addUser(user) {
-        return this.usersRepository.addUser(user);
-    }
     updateUser(id, user) {
         return this.usersRepository.updateUser(id, user);
     }

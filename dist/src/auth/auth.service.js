@@ -30,7 +30,7 @@ let AuthService = class AuthService {
             throw new common_1.BadRequestException('email ya registrado');
         const hashedPassword = await bcrypt.hash(password, 8);
         if (!hashedPassword)
-            throw new common_1.BadRequestException('no se pudo encriptar el password');
+            throw new common_1.BadRequestException('no se pudo Hashear el password');
         return await this.usersRepository.addUser({
             ...user,
             password: hashedPassword

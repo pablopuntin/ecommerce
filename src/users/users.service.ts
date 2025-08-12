@@ -40,9 +40,9 @@ getUserByEmail(email: string, password: string) {
 
   //usando dto
   // El servicio ahora espera un DTO
-  addUser(user: CreateUserDto) {
-    return this.usersRepository.addUser(user); // Renombraremos el método
-  }
+  // addUser(user: CreateUserDto) {
+  //   return this.usersRepository.addUser(user); // Renombraremos el método
+  // }
 
   // 🔹 PUT /users/:id
   updateUser(id: string, user: UpdateusertDto) {

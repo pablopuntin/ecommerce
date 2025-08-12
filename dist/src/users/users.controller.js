@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
-const auth_guard_1 = require("../auth/auth.guard");
+const auth_guard_1 = require("../auth/guard/auth.guard");
 const common_2 = require("@nestjs/common");
 const update_user_dto_1 = require("./dto/update-user.dto");
 let UsersController = class UsersController {
@@ -34,9 +34,6 @@ let UsersController = class UsersController {
     getUserById(id) {
         return this.userService.getUserById((id));
     }
-    getCofee() {
-        return 'no se hacer cafe, solo te y mate, jaja';
-    }
     updateUser(id, user) {
         return this.userService.updateUser(id, user);
     }
@@ -46,8 +43,8 @@ let UsersController = class UsersController {
 };
 exports.UsersController = UsersController;
 __decorate([
-    (0, common_1.Get)(),
     (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Get)(),
     __param(0, (0, common_1.Query)('page')),
     __param(1, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
@@ -64,7 +61,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUserByEmail", null);
 __decorate([
-    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
@@ -73,15 +69,7 @@ __decorate([
 ], UsersController.prototype, "getUserById", null);
 __decorate([
     (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.HttpCode)(418),
-    (0, common_1.Get)('cofee'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], UsersController.prototype, "getCofee", null);
-__decorate([
     (0, common_1.Put)(':id'),
-    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),

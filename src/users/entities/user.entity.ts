@@ -14,14 +14,14 @@ export class User {
     @Column({ type: 'varchar', length: 50 })
     name: string;
 
-    @Column({ type: 'varchar', length: 50 })
+    @Column({ type: 'varchar', length: 50, unique: true })
     email: string;
 
     //ya trae por defecto nullable: false
     @Column({ type: 'varchar', length: 70, nullable: false })
     password: string;
 
-    @Column({type: 'int'})
+    @Column({type: 'bigint'})
     phone: number;
 
     @Column({ type: 'varchar', length: 50 })

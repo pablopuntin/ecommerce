@@ -3,6 +3,7 @@ import { CreateUserDto } from 'src/users/dto/users.dto';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
+    getAuth(): string;
     signUp(user: CreateUserDto): Promise<{
         id: string;
         name: string;

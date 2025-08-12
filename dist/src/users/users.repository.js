@@ -44,6 +44,11 @@ let UsersRepository = class UsersRepository {
     }
     async addUser(user) {
         const newUser = await this.usersRepository.save(user);
+        const dbUser = await this.usersRepository.findOneBy({
+            id: newUser.id
+        });
+        if (!dbUser)
+            throw new Error(`No se encontro el usuario con id: ${newUser.id}`);
         const { password, ...userNoPassword } = newUser;
         return userNoPassword;
     }

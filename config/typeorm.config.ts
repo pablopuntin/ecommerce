@@ -16,7 +16,7 @@ export const typeOrmConfigAsync = {
     logging: true,
     entities: ['dist/**/*.entity.{ts,js}'],
     synchronize: true, // true solo en desarrollo
-    dropSchema: true, // no eliminar esquemas al reiniciar
+    dropSchema: false, // no eliminar esquemas al reiniciar
     migrations: ['dist/migrations/*.{ts,js}'],
     migrationsTableName: 'migrations',
   }),

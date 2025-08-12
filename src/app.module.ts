@@ -9,15 +9,30 @@ import { CategoriesModule } from './categories/categories.module';
 import { OrdersModule } from './orders/orders.module';
 import { OrderDetailsModule } from './order-details/order-details.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
+import {LoggerMiddeleware} from './middlewares/logger.middleware'
+import { JwtModule } from '@nestjs/jwt';
 
 
 
 
 @Module({
-  imports: [ ConfigModule.forRoot({ isGlobal: true }), // habilita variables de entorno
+  imports: [
+     ConfigModule.forRoot({ isGlobal: true }), // habilita variables de entorno
     TypeOrmModule.forRootAsync(typeOrmConfigAsync),
-    UsersModule, ProductsModule, AuthModule, CategoriesModule, OrdersModule, OrderDetailsModule, FileUploadModule],
+    UsersModule, ProductsModule, AuthModule, CategoriesModule, OrdersModule, OrderDetailsModule, FileUploadModule,
+  JwtModule.register({
+    global: true,
+    secret: process.env.JWT_SECRET,
+    signOptions: {expiresIn: '60m'},
+  }),
+],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  configure (consumer: MiddlewareConsumer){
+    consumer
+            .apply(LoggerMiddeleware)
+            .forRoutes('*')
+  }
+}

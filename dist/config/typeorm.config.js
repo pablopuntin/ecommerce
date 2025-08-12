@@ -15,7 +15,7 @@ exports.typeOrmConfigAsync = {
         logging: true,
         entities: ['dist/**/*.entity.{ts,js}'],
         synchronize: true,
-        dropSchema: true,
+        dropSchema: false,
         migrations: ['dist/migrations/*.{ts,js}'],
         migrationsTableName: 'migrations',
     }),

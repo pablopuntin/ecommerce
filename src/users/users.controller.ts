@@ -1,6 +1,6 @@
 import { Controller, Delete, Get, HttpCode, Post, Put, Param, Body,Query, ParseUUIDPipe } from '@nestjs/common';
 import { UserService } from './users.service';
-import { AuthGuard } from 'src/auth/auth.guard';  
+import { AuthGuard } from 'src/auth/guard/auth.guard';  
 import { UseGuards } from '@nestjs/common';
 import { UpdateusertDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/users.dto';
@@ -10,8 +10,8 @@ import { from } from 'form-data';
 export class UsersController {
   constructor(private readonly userService: UserService) {}
 
-  @Get()
   @UseGuards(AuthGuard)
+  @Get()
   getUsers(
      @Query('page') page?: string,
         @Query('limit') limit?: string) {
@@ -32,7 +32,7 @@ export class UsersController {
   }
 
   //para un id, por ejemplo get/1
-  @UseGuards(AuthGuard)
+  //@UseGuards(AuthGuard)
   @Get(':id')
   getUserById(@Param('id', ParseUUIDPipe) id: string ) {
     return this.userService.getUserById((id));
@@ -41,22 +41,24 @@ export class UsersController {
 
 
   //cambiar status a 418(el servidor se rehusa a hacer lo que se le pide)
-  @UseGuards(AuthGuard)
-  @HttpCode(418)
-  @Get('cofee')
-  getCofee() {
-    return 'no se hacer cafe, solo te y mate, jaja';
-    //return this.userService.getCofee();
-  }
+  // @UseGuards(AuthGuard)
+  // @HttpCode(418)
+  // @Get('cofee')
+  // getCofee() {
+  //   return 'no se hacer cafe, solo te y mate, jaja';
+  //   //return this.userService.getCofee();
+  // }
 
+
+  //Ahora lo usa Auth, por eso esta comentado
   // @HttpCode(201) // 201 Created
   // @Post()
   // addUser(@Body()user: CreateUserDto) {
   //     return this.userService.addUser(user);
   // }
 
-  @Put(':id')
   @UseGuards(AuthGuard)
+  @Put(':id')
   updateUser(
     @Param('id', ParseUUIDPipe)id: string,
     @Body()user: UpdateusertDto,

@@ -40,16 +40,16 @@ export class UsersRepository{
     return userNoPassword
   }
 
-  // async addUser(user: CreateUserDto){
-  //   const newUser = await this.usersRepository.save(user);
-  //   const {password, ...userNoPassword} = newUser;
-  //   return userNoPassword
-  // }
-
+ 
   //usando dto
   async addUser (user: Partial<User>){
        const newUser = await this.usersRepository.save(user);
+       //buscamos el user sin el confirmPassword
+       const dbUser= await this.usersRepository.findOneBy({
+        id: newUser.id
+       })
     //retorna el usuario sin la contraseña
+    if(!dbUser) throw new Error(`No se encontro el usuario con id: ${newUser.id}`);
     const {password, ...userNoPassword}= newUser;
     return userNoPassword;
   }

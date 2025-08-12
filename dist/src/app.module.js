@@ -18,14 +18,28 @@ const categories_module_1 = require("./categories/categories.module");
 const orders_module_1 = require("./orders/orders.module");
 const order_details_module_1 = require("./order-details/order-details.module");
 const file_upload_module_1 = require("./file-upload/file-upload.module");
+const logger_middleware_1 = require("./middlewares/logger.middleware");
+const jwt_1 = require("@nestjs/jwt");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer
+            .apply(logger_middleware_1.LoggerMiddeleware)
+            .forRoutes('*');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [config_1.ConfigModule.forRoot({ isGlobal: true }),
+        imports: [
+            config_1.ConfigModule.forRoot({ isGlobal: true }),
             typeorm_1.TypeOrmModule.forRootAsync(typeorm_config_1.typeOrmConfigAsync),
-            users_module_1.UsersModule, products_module_1.ProductsModule, auth_module_1.AuthModule, categories_module_1.CategoriesModule, orders_module_1.OrdersModule, order_details_module_1.OrderDetailsModule, file_upload_module_1.FileUploadModule],
+            users_module_1.UsersModule, products_module_1.ProductsModule, auth_module_1.AuthModule, categories_module_1.CategoriesModule, orders_module_1.OrdersModule, order_details_module_1.OrderDetailsModule, file_upload_module_1.FileUploadModule,
+            jwt_1.JwtModule.register({
+                global: true,
+                secret: process.env.JWT_SECRET,
+                signOptions: { expiresIn: '60m' },
+            }),
+        ],
         controllers: [],
         providers: [],
     })

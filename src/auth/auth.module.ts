@@ -9,10 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
-    JwtModule.register({
-      secret: 'TU_SECRETO_SUPER_SEGURO',  // cambiar por variable de entorno
-      signOptions: { expiresIn: '1h' },
-    }),
+    
   ],
   providers: [AuthService, UsersRepository],
   controllers: [AuthController],

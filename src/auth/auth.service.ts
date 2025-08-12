@@ -24,17 +24,16 @@ import { User } from 'src/users/entities/user.entity';
 
         //hashear el password
         const hashedPassword = await bcrypt.hash(password, 8)
-        if (!hashedPassword)  throw new BadRequestException('no se pudo encriptar el password');
+        if (!hashedPassword)  throw new BadRequestException('no se pudo Hashear el password');
         //creamos el usuario en bd
       return  await this.usersRepository.addUser({
           ...user,
           password: hashedPassword
         })
-
-
       }
 
 
+      
   //Login
  async signIn(email: string, password: string) {
      if (!email || !password) 
