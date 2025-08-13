@@ -11,40 +11,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthGuard = void 0;
 const common_1 = require("@nestjs/common");
-const users_service_1 = require("../../users/users.service");
+const jwt_1 = require("@nestjs/jwt");
 let AuthGuard = class AuthGuard {
-    userService;
-    constructor(userService) {
-        this.userService = userService;
+    jwtService;
+    constructor(jwtService) {
+        this.jwtService = jwtService;
     }
-    async canActivate(context) {
+    canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        const authHeader = request.headers['authorization'];
-        if (!authHeader || !authHeader.startsWith('Basic ')) {
-            return false;
-        }
-        const base64Credentials = authHeader.replace('Basic ', '');
-        const decodedCredentials = Buffer.from(base64Credentials, 'base64').toString();
-        const [email, password] = decodedCredentials.split(':');
-        if (!email || !password) {
-            throw new common_1.UnauthorizedException('Formato de credenciales inválido.');
+        const token = request.headers.authorization?.split(' ')[1];
+        if (!token) {
+            throw new common_1.UnauthorizedException('No se ha enviado un token');
         }
         try {
-            const user = await this.userService.getUserByEmail(email, password);
-            if (!user) {
-                throw new common_1.UnauthorizedException();
-            }
-            request.user = user;
+            const secret = process.env.JWT_SECRET;
+            const payload = this.jwtService.verify(token, { secret });
+            console.log(payload);
             return true;
+            payload.exp = new Date(payload.exp * 1000);
+            request.user = payload;
         }
         catch (error) {
-            throw new common_1.UnauthorizedException('Credenciales inválidas');
+            throw new common_1.UnauthorizedException('error al validar el token');
         }
     }
 };
 exports.AuthGuard = AuthGuard;
 exports.AuthGuard = AuthGuard = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [users_service_1.UserService])
+    __metadata("design:paramtypes", [jwt_1.JwtService])
 ], AuthGuard);
 //# sourceMappingURL=auth.guard.js.map

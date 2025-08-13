@@ -1,43 +1,34 @@
-// src/auth/auth.guard.ts
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from "@nestjs/common";
+import { CanActivate, Injectable, UnauthorizedException } from "@nestjs/common";
+import { ExecutionContext } from "@nestjs/common";
 import { Observable } from "rxjs";
-import { UserService } from "src/users/users.service";
+import { JwtService } from '@nestjs/jwt';
+
 
 @Injectable()
-export class AuthGuard implements CanActivate {
-    constructor(private readonly userService: UserService) {}
-
-    async canActivate(context: ExecutionContext): Promise<boolean> {
-        
-    
-    const request = context.switchToHttp().getRequest();
-    const authHeader = request.headers['authorization'];
-
-    if(!authHeader || !authHeader.startsWith('Basic ')) {
-      return false;
-    }
-
-    // Aquí se decodifican las credenciales
-        const base64Credentials = authHeader.replace('Basic ', '');
-        const decodedCredentials = Buffer.from(base64Credentials, 'base64').toString();
-        const [email, password] = decodedCredentials.split(':');
-
-        if (!email || !password) {
-            throw new UnauthorizedException('Formato de credenciales inválido.');
+export class AuthGuard implements CanActivate{
+    constructor (
+        private readonly jwtService: JwtService){}
+    canActivate(
+        context: ExecutionContext
+    ): boolean | Promise<boolean> | Observable<boolean> {
+        const request = context.switchToHttp().getRequest();
+         const token = request.headers.authorization?.split(' ')[1];//[ 'Bearer' , 'JWToken']
+        if(!token){
+            throw new UnauthorizedException('No se ha enviado un token')
         }
-
-        try {
-            // Ahora, 'email' y 'password' están definidos y se pueden usar
-            const user = await this.userService.getUserByEmail(email, password);
-
-            if (!user) {
-                throw new UnauthorizedException();
-            }
-
-            request.user = user;
+        try{
+            const secret = process.env.JWT_SECRET;
+            const payload = this.jwtService.verify(token, {secret});
+            console.log( payload);
             return true;
-        } catch (error) {
-            throw new UnauthorizedException('Credenciales inválidas');
+
+            //payload son los datos autorizados del usuario
+            payload.exp = new Date(payload.exp * 1000);
+            request.user = payload
+
+        }catch(error){
+            throw new UnauthorizedException('error al validar el token')
         }
-    }
-} 
+    
+        }
+}

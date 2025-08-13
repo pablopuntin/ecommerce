@@ -61,6 +61,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUserByEmail", null);
 __decorate([
+    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
@@ -77,8 +78,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "updateUser", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
     (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

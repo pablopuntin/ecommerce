@@ -18,5 +18,8 @@ export declare class AuthController {
     signIn(LoginUserDto: {
         email: string;
         password: string;
-    }): Promise<string>;
+    }): Promise<{
+        message: string;
+        token: string;
+    }>;
 }

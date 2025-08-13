@@ -31,8 +31,8 @@ export class UsersController {
     return this.userService.getUserByEmail(email, name);
   }
 
-  //para un id, por ejemplo get/1
-  //@UseGuards(AuthGuard)
+ 
+  @UseGuards(AuthGuard)
   @Get(':id')
   getUserById(@Param('id', ParseUUIDPipe) id: string ) {
     return this.userService.getUserById((id));
@@ -50,13 +50,6 @@ export class UsersController {
   // }
 
 
-  //Ahora lo usa Auth, por eso esta comentado
-  // @HttpCode(201) // 201 Created
-  // @Post()
-  // addUser(@Body()user: CreateUserDto) {
-  //     return this.userService.addUser(user);
-  // }
-
   @UseGuards(AuthGuard)
   @Put(':id')
   updateUser(
@@ -69,8 +62,8 @@ export class UsersController {
   
   
 
-  @Delete(':id')
   @UseGuards(AuthGuard)
+  @Delete(':id')
   deleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.deleteUser((id));
   }

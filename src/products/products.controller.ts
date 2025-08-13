@@ -1,7 +1,8 @@
-import { Get, Post, Query,Param, Put, Body } from "@nestjs/common";
+import { Get, Post, Query,Param, Put, Body, UseGuards } from "@nestjs/common";
 import { ProductsService } from "./products.service";
 import { Controller } from "@nestjs/common";
 import { Product } from "./entities/product.entity";
+import { AuthGuard } from "src/auth/guard/auth.guard";
 
 
 @Controller('products')
@@ -29,6 +30,7 @@ export class ProductsController {
 
   // Nuevo: actualizar producto por ID
   @Put(':id')
+    @UseGuards(AuthGuard)
   updateProduct(@Param('id') id: string, @Body() product: Product) {
     return this.productService.updateProduct(id, product);
   }

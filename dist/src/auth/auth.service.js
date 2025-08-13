@@ -13,10 +13,13 @@ exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const users_repository_1 = require("../users/users.repository");
 const bcrypt = require("bcrypt");
+const jwt_1 = require("@nestjs/jwt");
 let AuthService = class AuthService {
     usersRepository;
-    constructor(usersRepository) {
+    jwtService;
+    constructor(usersRepository, jwtService) {
         this.usersRepository = usersRepository;
+        this.jwtService = jwtService;
     }
     getAuth() {
         return 'Autenticacion';
@@ -37,15 +40,24 @@ let AuthService = class AuthService {
         });
     }
     async signIn(email, password) {
-        if (!email || !password)
-            throw new common_1.BadRequestException('Email and password are required');
-        const user = this.usersRepository.getUserByEmail(email);
-        return 'usuario logueado (TOKEN)';
+        const foundUser = await this.usersRepository.getUserByEmail(email);
+        if (!foundUser)
+            throw new common_1.BadRequestException('credenciales incorrectas');
+        const validPassword = await bcrypt.compare(password, foundUser.password);
+        if (!validPassword)
+            throw new common_1.BadRequestException('credenciales incorrectas');
+        const payLoad = { id: foundUser.id, isAdmin: foundUser.isAdmin };
+        const token = this.jwtService.sign(payLoad);
+        return {
+            message: 'usuario logueado',
+            token,
+        };
     }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [users_repository_1.UsersRepository])
+    __metadata("design:paramtypes", [users_repository_1.UsersRepository,
+        jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map
