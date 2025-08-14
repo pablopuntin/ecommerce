@@ -3,7 +3,9 @@ import { ProductsService } from "./products.service";
 import { Controller } from "@nestjs/common";
 import { Product } from "./entities/product.entity";
 import { AuthGuard } from "src/auth/guard/auth.guard";
-
+import { Role } from "src/auth/roles.enum";
+import { Roles } from 'src/decorators/roles.decorator';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
 
 @Controller('products')
 export class ProductsController {
@@ -30,7 +32,8 @@ export class ProductsController {
 
   // Nuevo: actualizar producto por ID
   @Put(':id')
-    @UseGuards(AuthGuard)
+     @Roles(Role.Admin)//'admin' pasar al resto de rutas
+      @UseGuards(AuthGuard, RolesGuard)
   updateProduct(@Param('id') id: string, @Body() product: Product) {
     return this.productService.updateProduct(id, product);
   }

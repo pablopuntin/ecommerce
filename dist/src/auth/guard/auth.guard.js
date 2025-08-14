@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthGuard = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
+const roles_enum_1 = require("../roles.enum");
 let AuthGuard = class AuthGuard {
     jwtService;
     constructor(jwtService) {
@@ -26,10 +27,11 @@ let AuthGuard = class AuthGuard {
         try {
             const secret = process.env.JWT_SECRET;
             const payload = this.jwtService.verify(token, { secret });
-            console.log(payload);
-            return true;
             payload.exp = new Date(payload.exp * 1000);
+            payload.roles = payload.isAdmin ? [roles_enum_1.Role.Admin] : [roles_enum_1.Role.User];
             request.user = payload;
+            console.log(request.user);
+            return true;
         }
         catch (error) {
             throw new common_1.UnauthorizedException('error al validar el token');

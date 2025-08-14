@@ -21,7 +21,7 @@ export class UsersRepository{
       take: limit,
       skip: skip,
     });
-    return users.map(({password, ...userNoPassword})=> userNoPassword);
+    return users.map(({password, isAdmin, ...filteredUserData})=> filteredUserData);
   }
 
   async getUserById(id: string){

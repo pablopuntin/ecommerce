@@ -13,11 +13,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
+const roles_enum_1 = require("./../auth/roles.enum");
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const auth_guard_1 = require("../auth/guard/auth.guard");
 const common_2 = require("@nestjs/common");
 const update_user_dto_1 = require("./dto/update-user.dto");
+const roles_decorator_1 = require("../decorators/roles.decorator");
+const roles_guard_1 = require("../auth/guard/roles.guard");
 let UsersController = class UsersController {
     userService;
     constructor(userService) {
@@ -43,8 +46,9 @@ let UsersController = class UsersController {
 };
 exports.UsersController = UsersController;
 __decorate([
-    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)(),
+    (0, roles_decorator_1.Roles)(roles_enum_1.Role.Admin),
+    (0, common_2.UseGuards)(auth_guard_1.AuthGuard, roles_guard_1.RolesGuard),
     __param(0, (0, common_1.Query)('page')),
     __param(1, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),

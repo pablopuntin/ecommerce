@@ -28,7 +28,7 @@ let UsersRepository = class UsersRepository {
             take: limit,
             skip: skip,
         });
-        return users.map(({ password, ...userNoPassword }) => userNoPassword);
+        return users.map(({ password, isAdmin, ...filteredUserData }) => filteredUserData);
     }
     async getUserById(id) {
         const user = await this.usersRepository.findOne({

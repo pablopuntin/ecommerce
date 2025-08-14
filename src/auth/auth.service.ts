@@ -46,7 +46,7 @@ import { JwtService } from '@nestjs/jwt';
        const validPassword = await bcrypt.compare(password, foundUser.password);
        if (!validPassword)   throw new BadRequestException('credenciales incorrectas');
 
-       //generar token
+       //generar token (firmamos token)
        const payLoad = {id: foundUser.id, isAdmin: foundUser.isAdmin}//email no lo envio por las dudas alguien pueda ver el request}
       const token = this.jwtService.sign(payLoad);
       

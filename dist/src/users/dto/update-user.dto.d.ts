@@ -10,5 +10,6 @@ export declare class UpdateusertDto extends UpdateusertDto_base {
     email: string;
     password: string;
     phone: number;
+    isAdmin: boolean;
 }
 export {};

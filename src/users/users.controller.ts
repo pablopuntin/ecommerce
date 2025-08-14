@@ -1,17 +1,21 @@
-import { Controller, Delete, Get, HttpCode, Post, Put, Param, Body,Query, ParseUUIDPipe } from '@nestjs/common';
+import { Role } from './../auth/roles.enum';
+import { Controller, Delete, Get, Put, Param, Body,Query, ParseUUIDPipe} from '@nestjs/common';
 import { UserService } from './users.service';
 import { AuthGuard } from 'src/auth/guard/auth.guard';  
 import { UseGuards } from '@nestjs/common';
 import { UpdateusertDto } from './dto/update-user.dto';
-import { CreateUserDto } from './dto/users.dto';
-import { from } from 'form-data';
+import { Roles } from 'src/decorators/roles.decorator';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
+
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UserService) {}
 
-  @UseGuards(AuthGuard)
+  //aplicar el decorator role
   @Get()
+  @Roles(Role.Admin)//'admin' pasar al resto de rutas
+  @UseGuards(AuthGuard, RolesGuard)
   getUsers(
      @Query('page') page?: string,
         @Query('limit') limit?: string) {
