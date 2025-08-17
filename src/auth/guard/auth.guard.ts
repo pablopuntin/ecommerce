@@ -13,7 +13,8 @@ export class AuthGuard implements CanActivate{
         context: ExecutionContext
     ): boolean | Promise<boolean> | Observable<boolean> {
         const request = context.switchToHttp().getRequest();
-         const token = request.headers.authorization?.split(' ')[1];//[ 'Bearer' , 'JWToken']
+         const token = request.headers.authorization?.split(' ')[1];
+         console.log(token)
         if(!token){
             throw new UnauthorizedException('No se ha enviado un token')
         }

@@ -13,9 +13,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const users_dto_1 = require("../users/dto/users.dto");
+const users_dto_2 = require("../users/dto/users.dto");
+const swagger_1 = require("@nestjs/swagger");
 let AuthController = class AuthController {
     authService;
     constructor(authService) {
@@ -27,29 +30,33 @@ let AuthController = class AuthController {
     signUp(user) {
         return this.authService.signUp(user);
     }
-    signIn(LoginUserDto) {
-        return this.authService.signIn(LoginUserDto.email, LoginUserDto.password);
+    signIn(loginUserDto) {
+        return this.authService.signIn(loginUserDto.email, loginUserDto.password);
     }
 };
 exports.AuthController = AuthController;
 __decorate([
     (0, common_1.Get)(),
+    openapi.ApiResponse({ status: 200, type: String }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "getAuth", null);
 __decorate([
     (0, common_1.Post)('signup'),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [users_dto_1.CreateUserDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "signUp", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Post)('signin'),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [users_dto_2.LoginUserDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "signIn", null);
 exports.AuthController = AuthController = __decorate([

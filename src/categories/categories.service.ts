@@ -1,5 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import {CategoriesRepository} from './categories.repository'
+import {CreateCategoryDto} from './dto/create-category.dto'
+
 
 @Injectable()
 export class CategoriesService{
@@ -9,8 +11,8 @@ getAllCategories(){
   return this.categoriesRepository.getAllCategories();
 }
 
-addCategories(){
-  return this.categoriesRepository.addCategories();
-}
+ addCategories(data: CreateCategoryDto[]) {
+    return this.categoriesRepository.addCategories(data);
+  }
 
 }

@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
+const openapi = require("@nestjs/swagger");
 const roles_enum_1 = require("./../auth/roles.enum");
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
@@ -21,6 +22,7 @@ const common_2 = require("@nestjs/common");
 const update_user_dto_1 = require("./dto/update-user.dto");
 const roles_decorator_1 = require("../decorators/roles.decorator");
 const roles_guard_1 = require("../auth/guard/roles.guard");
+const swagger_1 = require("@nestjs/swagger");
 let UsersController = class UsersController {
     userService;
     constructor(userService) {
@@ -30,9 +32,6 @@ let UsersController = class UsersController {
         if (page && limit)
             return this.userService.getUsers(Number(page), Number(limit));
         return this.userService.getUsers(1, 5);
-    }
-    getUserByEmail(email, name) {
-        return this.userService.getUserByEmail(email, name);
     }
     getUserById(id) {
         return this.userService.getUserById((id));
@@ -46,9 +45,11 @@ let UsersController = class UsersController {
 };
 exports.UsersController = UsersController;
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)(),
     (0, roles_decorator_1.Roles)(roles_enum_1.Role.Admin),
     (0, common_2.UseGuards)(auth_guard_1.AuthGuard, roles_guard_1.RolesGuard),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Query)('page')),
     __param(1, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
@@ -56,25 +57,20 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUsers", null);
 __decorate([
-    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Get)('credentials'),
-    __param(0, (0, common_1.Query)('email')),
-    __param(1, (0, common_1.Query)('password')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
-    __metadata("design:returntype", void 0)
-], UsersController.prototype, "getUserByEmail", null);
-__decorate([
-    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)(':id'),
+    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUserById", null);
 __decorate([
-    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Put)(':id'),
+    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -82,8 +78,10 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "updateUser", null);
 __decorate([
-    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Delete)(':id'),
+    (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

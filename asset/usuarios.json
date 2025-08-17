@@ -78,7 +78,7 @@
     "address": "Boulevard Central 321",
     "phone": 59891234567,
     "country": "Uruguay",
-    "city": "Montevideo",
+    "city": "Montevideo"
      },
   {
     "name": "Isabella Ríos",
@@ -88,5 +88,15 @@
     "phone": 50588889999,
     "country": "Nicaragua",
     "city": "Managua"
-     }
+     },
+     {
+  "name": "test user 01",
+  "email": "testuser01@mail.com",
+  "password": "testUser-01",
+  "confirmPassword": "testUser-01",
+  "address": "test Calle 01",
+  "phone": 0123456789,
+  "country": "test Country",
+  "city": "test City"
+}
 ]

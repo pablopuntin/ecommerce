@@ -13,10 +13,15 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileUploadController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const file_upload_service_1 = require("./file-upload.service");
 const platform_express_1 = require("@nestjs/platform-express");
 const auth_guard_1 = require("../auth/guard/auth.guard");
+const swagger_1 = require("@nestjs/swagger");
+const roles_enum_1 = require("../auth/roles.enum");
+const roles_decorator_1 = require("../decorators/roles.decorator");
+const roles_guard_1 = require("../auth/guard/roles.guard");
 let FileUploadController = class FileUploadController {
     fileUploadService;
     constructor(fileUploadService) {
@@ -28,9 +33,29 @@ let FileUploadController = class FileUploadController {
 };
 exports.FileUploadController = FileUploadController;
 __decorate([
-    (0, common_1.Post)('uploadImage/:id'),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, roles_decorator_1.Roles)(roles_enum_1.Role.Admin),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, roles_guard_1.RolesGuard),
+    (0, common_1.Put)('uploadImages/:id'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'cargar imagen para un producto' }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'ID del producto', type: String }),
+    (0, swagger_1.ApiConsumes)('multipart/form-data'),
+    (0, swagger_1.ApiBody)({
+        description: 'subir archivo',
+        required: true,
+        schema: {
+            type: 'object',
+            properties: {
+                file: {
+                    type: 'string',
+                    format: 'binary'
+                }
+            }
+        }
+    }),
+    (0, swagger_1.ApiResponse)({ status: 201, }),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
+    openapi.ApiResponse({ status: 200, type: Object }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.UploadedFile)(new common_1.ParseFilePipe({
         validators: [
@@ -48,6 +73,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], FileUploadController.prototype, "uploadImage", null);
 exports.FileUploadController = FileUploadController = __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('files'),
     __metadata("design:paramtypes", [file_upload_service_1.FileUploadService])
 ], FileUploadController);

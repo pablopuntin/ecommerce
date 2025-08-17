@@ -13,7 +13,6 @@ export declare class UsersController {
         city: string;
         orders: import("../orders/entities/order.entity").Order[];
     }[]>;
-    getUserByEmail(email: string, name: string): Promise<import("./entities/user.entity").User | null>;
     getUserById(id: string): Promise<{
         id: string;
         name: string;

@@ -72,8 +72,8 @@ export class UsersRepository{
     return userNoPassword;
   }
 
-  async getUserByEmail(email: string){
-    return await this.usersRepository.findOneBy({email});
-  }
+   async getUserByEmail(email: string){
+     return await this.usersRepository.findOneBy({email});
+   }
 
 }

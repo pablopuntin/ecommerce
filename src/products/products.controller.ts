@@ -6,6 +6,7 @@ import { AuthGuard } from "src/auth/guard/auth.guard";
 import { Role } from "src/auth/roles.enum";
 import { Roles } from 'src/decorators/roles.decorator';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 @Controller('products')
 export class ProductsController {
@@ -30,7 +31,7 @@ export class ProductsController {
     return this.productService.getProductById(id);
   }
 
-  // Nuevo: actualizar producto por ID
+ @ApiBearerAuth()
   @Put(':id')
      @Roles(Role.Admin)//'admin' pasar al resto de rutas
       @UseGuards(AuthGuard, RolesGuard)

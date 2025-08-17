@@ -10,11 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderDetailsDto = void 0;
+const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
 class ProductInOrderDto {
     productId;
     quantity;
+    static _OPENAPI_METADATA_FACTORY() {
+        return { productId: { required: true, type: () => String, format: "uuid" }, quantity: { required: true, type: () => Number, minimum: 1 } };
+    }
 }
 __decorate([
     (0, class_validator_1.IsUUID)('4', { message: 'productId inválido' }),
@@ -27,6 +31,9 @@ __decorate([
 ], ProductInOrderDto.prototype, "quantity", void 0);
 class OrderDetailsDto {
     products;
+    static _OPENAPI_METADATA_FACTORY() {
+        return { products: { required: true, type: () => [ProductInOrderDto], minItems: 1 } };
+    }
 }
 exports.OrderDetailsDto = OrderDetailsDto;
 __decorate([

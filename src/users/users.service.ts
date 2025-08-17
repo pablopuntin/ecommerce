@@ -24,25 +24,6 @@ export class UserService {
 return this.usersRepository.getUserById(id)
   }
 
-// 🔹 GET /users/credential
-getUserByEmail(email: string, password: string) {
-    if (!email || !password) {
-      throw new Error('Email and password are required');
-    }
-    return this.usersRepository.getUserByEmail(email);
-  }
-
-  
-  // 🔹 POST /users
-  // addUser(user: User) {
-  //   return this.usersRepository.addUser(user);
-  // }
-
-  //usando dto
-  // El servicio ahora espera un DTO
-  // addUser(user: CreateUserDto) {
-  //   return this.usersRepository.addUser(user); // Renombraremos el método
-  // }
 
   // 🔹 PUT /users/:id
   updateUser(id: string, user: UpdateusertDto) {

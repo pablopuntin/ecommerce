@@ -26,12 +26,6 @@ let UserService = class UserService {
         }
         return this.usersRepository.getUserById(id);
     }
-    getUserByEmail(email, password) {
-        if (!email || !password) {
-            throw new Error('Email and password are required');
-        }
-        return this.usersRepository.getUserByEmail(email);
-    }
     updateUser(id, user) {
         return this.usersRepository.updateUser(id, user);
     }

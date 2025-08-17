@@ -17,7 +17,7 @@ export class User {
     @Column({ type: 'varchar', length: 50, unique: true })
     email: string;
 
-    //ya trae por defecto nullable: false
+   
     @Column({ type: 'varchar', length: 70, nullable: false })
     password: string;
 
@@ -36,7 +36,7 @@ export class User {
     @Column({default: false})
     isAdmin: boolean;
 
-    //relacion 1:N con orders
+    
     @OneToMany(() => Order, order => order.user)
     @JoinColumn({name: 'order_id'})
     orders: Order[];

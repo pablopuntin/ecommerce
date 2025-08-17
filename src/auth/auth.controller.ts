@@ -1,6 +1,8 @@
-import { Controller, Get, Post, HttpCode, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/users/dto/users.dto';
+import { LoginUserDto } from 'src/users/dto/users.dto';
+import { ApiOperation, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 
 
 @Controller('auth')
@@ -12,18 +14,19 @@ export class AuthController {
     return this.authService.getAuth();
   }
 
-//Registro
+
 
   @Post('signup')
- signUp(@Body()  user: CreateUserDto){
+     signUp(@Body()  user: CreateUserDto){
    return this.authService.signUp(user);
  }
 
- //Login
- @Post('signin')
- signIn(@Body() LoginUserDto: { email: string; password: string }) {
-   return this.authService.signIn(LoginUserDto.email, LoginUserDto.password);
- }
+@ApiBearerAuth('JWT-auth')
+@Post('signin')
+  
+  signIn(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.signIn(loginUserDto.email, loginUserDto.password);
+  }
  
 
 }

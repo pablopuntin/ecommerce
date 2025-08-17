@@ -17,7 +17,6 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const categories_entity_1 = require("./entities/categories.entity");
-const data = require("../../asset/data.json");
 let CategoriesRepository = class CategoriesRepository {
     categoriesRepository;
     constructor(categoriesRepository) {
@@ -26,8 +25,8 @@ let CategoriesRepository = class CategoriesRepository {
     async getAllCategories() {
         return await this.categoriesRepository.find();
     }
-    async addCategories() {
-        data.map(async (element) => {
+    async addCategories(data) {
+        await Promise.all(data.map(async (element) => {
             await this.categoriesRepository
                 .createQueryBuilder()
                 .insert()
@@ -35,7 +34,7 @@ let CategoriesRepository = class CategoriesRepository {
                 .values({ name: element.category })
                 .orIgnore()
                 .execute();
-        });
+        }));
         return 'Categorias agregadas';
     }
 };

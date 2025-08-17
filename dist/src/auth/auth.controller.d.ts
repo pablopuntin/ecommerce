@@ -1,5 +1,6 @@
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/users/dto/users.dto';
+import { LoginUserDto } from 'src/users/dto/users.dto';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
@@ -15,10 +16,7 @@ export declare class AuthController {
         isAdmin: boolean;
         orders: import("../orders/entities/order.entity").Order[];
     }>;
-    signIn(LoginUserDto: {
-        email: string;
-        password: string;
-    }): Promise<{
+    signIn(loginUserDto: LoginUserDto): Promise<{
         message: string;
         token: string;
     }>;

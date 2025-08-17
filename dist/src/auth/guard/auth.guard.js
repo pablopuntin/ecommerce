@@ -21,6 +21,7 @@ let AuthGuard = class AuthGuard {
     canActivate(context) {
         const request = context.switchToHttp().getRequest();
         const token = request.headers.authorization?.split(' ')[1];
+        console.log(token);
         if (!token) {
             throw new common_1.UnauthorizedException('No se ha enviado un token');
         }

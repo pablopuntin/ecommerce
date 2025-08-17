@@ -10,17 +10,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrdersDto = void 0;
+const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
 const orderDetails_dto_1 = require("../../order-details/dto/orderDetails.dto");
+const swagger_1 = require("@nestjs/swagger");
 class OrdersDto {
     date;
     userId;
     orderDetailId;
     orderDetails;
+    static _OPENAPI_METADATA_FACTORY() {
+        return { date: { required: true, type: () => Date }, userId: { required: true, type: () => String, format: "uuid" }, orderDetailId: { required: false, type: () => String, format: "uuid" }, orderDetails: { required: false, type: () => require("../../order-details/dto/orderDetails.dto").OrderDetailsDto } };
+    }
 }
 exports.OrdersDto = OrdersDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'fecha en formato dd/mm/yy',
+        example: '12/08/2025'
+    }),
     (0, class_validator_1.IsNotEmpty)({ message: 'La fecha es obligatoria' }),
     (0, class_transformer_1.Type)(() => Date),
     (0, class_validator_1.IsDate)({ message: 'Debe ser una fecha válida' }),
@@ -28,6 +37,9 @@ __decorate([
     __metadata("design:type", Date)
 ], OrdersDto.prototype, "date", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'id del usuario obligatorio'
+    }),
     (0, class_validator_1.IsNotEmpty)({ message: 'userId es obligatorio' }),
     (0, class_validator_1.IsUUID)('4', { message: 'userId inválido' }),
     __metadata("design:type", String)

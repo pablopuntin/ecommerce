@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { UploadApiResponse, v2 } from "cloudinary";
-import { error } from "console";
 import toStream = require('buffer-to-stream')
 
  

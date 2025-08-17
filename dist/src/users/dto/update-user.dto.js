@@ -10,9 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateusertDto = void 0;
+const openapi = require("@nestjs/swagger");
 const mapped_types_1 = require("@nestjs/mapped-types");
 const users_dto_1 = require("./users.dto");
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class UpdateusertDto extends (0, mapped_types_1.PartialType)(users_dto_1.CreateUserDto) {
     id;
     orders;
@@ -23,8 +25,19 @@ class UpdateusertDto extends (0, mapped_types_1.PartialType)(users_dto_1.CreateU
     password;
     phone;
     isAdmin;
+    static _OPENAPI_METADATA_FACTORY() {
+        return { country: { required: true, type: () => String }, city: { required: true, type: () => String }, name: { required: true, type: () => String }, email: { required: true, type: () => String }, password: { required: true, type: () => String, minLength: 8, maxLength: 70 }, phone: { required: true, type: () => Number } };
+    }
 }
 exports.UpdateusertDto = UpdateusertDto;
+__decorate([
+    (0, swagger_1.ApiHideProperty)(),
+    __metadata("design:type", String)
+], UpdateusertDto.prototype, "id", void 0);
+__decorate([
+    (0, swagger_1.ApiHideProperty)(),
+    __metadata("design:type", Array)
+], UpdateusertDto.prototype, "orders", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
@@ -65,10 +78,11 @@ __decorate([
 ], UpdateusertDto.prototype, "password", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], UpdateusertDto.prototype, "phone", void 0);
 __decorate([
+    (0, swagger_1.ApiHideProperty)(),
     (0, class_validator_1.IsEmpty)(),
     __metadata("design:type", Boolean)
 ], UpdateusertDto.prototype, "isAdmin", void 0);

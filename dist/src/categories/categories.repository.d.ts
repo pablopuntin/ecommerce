@@ -4,5 +4,7 @@ export declare class CategoriesRepository {
     private categoriesRepository;
     constructor(categoriesRepository: Repository<Categories>);
     getAllCategories(): Promise<Categories[]>;
-    addCategories(): Promise<string>;
+    addCategories(data: {
+        category: string;
+    }[]): Promise<string>;
 }

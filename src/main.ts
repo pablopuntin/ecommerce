@@ -15,8 +15,8 @@ async function bootstrap() {
     .setTitle('Proyect Modulo 04')
     .setDescription('Api desarrollada con NestJs')
     .setVersion('1.0.0')
-    .addBearerAuth()//habilita uso de token
-    .build();
+    .addBearerAuth( )
+     .build();
 
   const documentFactory = () =>SwaggerModule.createDocument(app, config);
  SwaggerModule.setup('api', app, documentFactory);

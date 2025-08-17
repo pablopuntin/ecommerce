@@ -1,11 +1,14 @@
 import { PartialType } from '@nestjs/mapped-types';
 import {CreateUserDto} from './users.dto'
-import { IsOptional, IsString, IsNotEmpty, IsStrongPassword, MaxLength, MinLength, IsEmpty } from 'class-validator';
+import { IsOptional, IsString, IsNotEmpty, IsStrongPassword, MaxLength, MinLength, IsEmpty, IsNumber } from 'class-validator';
 import { Order } from 'src/orders/entities/order.entity';
+import { ApiHideProperty } from '@nestjs/swagger';
 
 export class UpdateusertDto extends PartialType(CreateUserDto) {
-  //datos que no llegan por body, el id y Orders de la relacion con Order
+
+  @ApiHideProperty()
   id: string;
+  @ApiHideProperty()
   orders: Order[];
 
 
@@ -44,9 +47,10 @@ export class UpdateusertDto extends PartialType(CreateUserDto) {
    password: string;
 
   @IsOptional()
-  @IsString()
+   @IsNumber()
   phone : number;
-
+  
+   @ApiHideProperty()
   @IsEmpty()
   isAdmin:boolean;
 

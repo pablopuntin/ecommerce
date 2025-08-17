@@ -6,13 +6,14 @@ import { UseGuards } from '@nestjs/common';
 import { UpdateusertDto } from './dto/update-user.dto';
 import { Roles } from 'src/decorators/roles.decorator';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UserService) {}
 
-  //aplicar el decorator role
+  @ApiBearerAuth()
   @Get()
   @Roles(Role.Admin)//'admin' pasar al resto de rutas
   @UseGuards(AuthGuard, RolesGuard)
@@ -26,48 +27,27 @@ export class UsersController {
           return this.userService.getUsers(1, 5);
   }
 
-  @UseGuards(AuthGuard)
-  @Get('credentials')
-  getUserByEmail(
-    @Query('email') email: string,
-    @Query('password') name: string,
-  ) {
-    return this.userService.getUserByEmail(email, name);
-  }
-
- 
-  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Get(':id')
+  @UseGuards(AuthGuard)
   getUserById(@Param('id', ParseUUIDPipe) id: string ) {
     return this.userService.getUserById((id));
   }
 
-
-
-  //cambiar status a 418(el servidor se rehusa a hacer lo que se le pide)
-  // @UseGuards(AuthGuard)
-  // @HttpCode(418)
-  // @Get('cofee')
-  // getCofee() {
-  //   return 'no se hacer cafe, solo te y mate, jaja';
-  //   //return this.userService.getCofee();
-  // }
-
-
-  @UseGuards(AuthGuard)
+   @ApiBearerAuth()
   @Put(':id')
+  @UseGuards(AuthGuard)
   updateUser(
     @Param('id', ParseUUIDPipe)id: string,
     @Body()user: UpdateusertDto,
   ){
     return this.userService.updateUser(id, user);
   }
+   
   
-  
-  
-
-  @UseGuards(AuthGuard)
+ @ApiBearerAuth()
   @Delete(':id')
+  @UseGuards(AuthGuard)
   deleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.deleteUser((id));
   }
