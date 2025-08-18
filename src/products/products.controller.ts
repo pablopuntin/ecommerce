@@ -21,7 +21,7 @@ export class ProductsController {
     return this.productService.getProducts(Number(1), Number(5));
   }
 
-  @Post ('seeder')
+  @Get ('seeder')
   addProducts(){
     return this.productService.addProducts();
   }

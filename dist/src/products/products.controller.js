@@ -55,8 +55,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "getProducts", null);
 __decorate([
-    (0, common_1.Post)('seeder'),
-    openapi.ApiResponse({ status: 201, type: String }),
+    (0, common_1.Get)('seeder'),
+    openapi.ApiResponse({ status: 200, type: String }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
