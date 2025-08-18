@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import {CategoriesRepository} from './categories.repository'
-import {CreateCategoryDto} from './dto/create-category.dto'
+
 
 
 @Injectable()
@@ -11,8 +11,7 @@ getAllCategories(){
   return this.categoriesRepository.getAllCategories();
 }
 
- addCategories(data: CreateCategoryDto[]) {
-    return this.categoriesRepository.addCategories(data);
+ addCategories() {
+    return this.categoriesRepository.addCategories();
   }
-
 }

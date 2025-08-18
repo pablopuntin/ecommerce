@@ -16,23 +16,23 @@ export class CategoriesRepository {
   async getAllCategories() {
     return await this.categoriesRepository.find();
     }
+ async addCategories() {
+    await Promise.all(
+      data.map(async (element: { category: string }) => {
+        await this.categoriesRepository
+          .createQueryBuilder()
+          .insert()
+          .into(Categories)
+          .values({ name: element.category })
+          .orIgnore()
+          .execute();
+      }),
+    );
 
-   async addCategories(data: { category: string }[]) {
-  await Promise.all(
-    data.map(async (element) => {
-      await this.categoriesRepository
-        .createQueryBuilder()
-        .insert()
-        .into(Categories)
-        .values({ name: element.category })
-        .orIgnore()
-        .execute();
-    }),
-  );
-
-  return 'Categorias agregadas';
+    return 'Categorias agregadas';
+  }
 }
+   
 
 
 
-}

@@ -35,6 +35,7 @@ export class UsersController {
   }
 
    @ApiBearerAuth()
+   
   @Put(':id')
   @UseGuards(AuthGuard)
   updateUser(

@@ -1,10 +1,6 @@
 import { Controller, Get, Post, Body } from "@nestjs/common";
 import { CategoriesService } from './categories.service';
 import { ApiBearerAuth, ApiBody } from "@nestjs/swagger";
-import {CreateCategoryDto} from './dto/create-category.dto'
-
-
-
 
 @Controller('categories')
 export class CategoriesController{
@@ -17,15 +13,10 @@ export class CategoriesController{
   }
 
 
- @ApiBearerAuth()
-  @Post('seeder')
-  @ApiBody({ type: [CreateCategoryDto] }) // 👈 importante: array de DTOs
-  addCategories(@Body() data: CreateCategoryDto[]) {
-    return this.categoriesService.addCategories(data); // 👈 llama al service, no al repo
-  }
-
-
-
+@ApiBearerAuth()
+@Get('seeder')
+addCategories() {
+  return this.categoriesService.addCategories(); }
 
 }
 

@@ -23,6 +23,7 @@ const roles_enum_1 = require("../auth/roles.enum");
 const roles_decorator_1 = require("../decorators/roles.decorator");
 const roles_guard_1 = require("../auth/guard/roles.guard");
 const swagger_1 = require("@nestjs/swagger");
+const update_product_dto_1 = require("./dto/update-product.dto");
 let ProductsController = class ProductsController {
     productService;
     constructor(productService) {
@@ -70,6 +71,7 @@ __decorate([
 ], ProductsController.prototype, "getProductById", null);
 __decorate([
     (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBody)({ type: update_product_dto_1.UpdateProductDto }),
     (0, common_1.Put)(':id'),
     (0, roles_decorator_1.Roles)(roles_enum_1.Role.Admin),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard, roles_guard_1.RolesGuard),

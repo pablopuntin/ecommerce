@@ -20,8 +20,8 @@ let CategoriesService = class CategoriesService {
     getAllCategories() {
         return this.categoriesRepository.getAllCategories();
     }
-    addCategories(data) {
-        return this.categoriesRepository.addCategories(data);
+    addCategories() {
+        return this.categoriesRepository.addCategories();
     }
 };
 exports.CategoriesService = CategoriesService;

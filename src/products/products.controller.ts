@@ -6,7 +6,9 @@ import { AuthGuard } from "src/auth/guard/auth.guard";
 import { Role } from "src/auth/roles.enum";
 import { Roles } from 'src/decorators/roles.decorator';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
-import { ApiBearerAuth } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody } from "@nestjs/swagger";
+import {UpdateProductDto} from './dto/update-product.dto'
+
 
 @Controller('products')
 export class ProductsController {
@@ -32,6 +34,7 @@ export class ProductsController {
   }
 
  @ApiBearerAuth()
+ @ApiBody({ type: UpdateProductDto })
   @Put(':id')
      @Roles(Role.Admin)//'admin' pasar al resto de rutas
       @UseGuards(AuthGuard, RolesGuard)
