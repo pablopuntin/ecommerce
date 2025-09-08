@@ -14,27 +14,21 @@ const openapi = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("../../users/entities/user.entity");
 const orderDetails_entity_1 = require("../../order-details/entities/orderDetails.entity");
-const swagger_1 = require("@nestjs/swagger");
 let Order = class Order {
     id;
     date;
     user;
     orderDetails;
     static _OPENAPI_METADATA_FACTORY() {
-        return { date: { required: true, type: () => Date }, user: { required: true, type: () => require("../../users/entities/user.entity").User }, orderDetails: { required: true, type: () => require("../../order-details/entities/orderDetails.entity").OrderDetail } };
+        return { id: { required: true, type: () => String }, date: { required: true, type: () => Date }, user: { required: true, type: () => require("../../users/entities/user.entity").User }, orderDetails: { required: true, type: () => require("../../order-details/entities/orderDetails.entity").OrderDetail } };
     }
 };
 exports.Order = Order;
 __decorate([
-    (0, swagger_1.ApiHideProperty)(),
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
 ], Order.prototype, "id", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({
-        description: 'fecha en formato dd/mm/yyyy',
-        example: '13/08/2025'
-    }),
     (0, typeorm_1.Column)({ type: 'date' }),
     __metadata("design:type", Date)
 ], Order.prototype, "date", void 0);

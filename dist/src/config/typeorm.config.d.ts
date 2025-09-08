@@ -1,7 +1,5 @@
+import { DataSource, DataSourceOptions } from 'typeorm';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-export declare const typeOrmConfigAsync: {
-    imports: (typeof ConfigModule)[];
-    inject: (typeof ConfigService)[];
-    useFactory: (configService: ConfigService) => Promise<TypeOrmModuleOptions>;
-};
+declare const typeOrmConfig: TypeOrmModuleOptions & DataSourceOptions;
+export default typeOrmConfig;
+export declare const connectionSource: DataSource;

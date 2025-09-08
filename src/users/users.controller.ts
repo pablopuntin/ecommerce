@@ -52,4 +52,13 @@ export class UsersController {
   deleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.deleteUser((id));
   }
+
+  // @Put(':id')
+  // @UseGuards(AuthGuard, RolesGuard)
+  // updateAdmin(
+  //   @Param('id', ParseUUIDPipe)id: string,
+  //   @Body()user: UpdateusertDto,
+  // ){
+  //   return this.userService.updateUser(id, user);
+  // }
 }

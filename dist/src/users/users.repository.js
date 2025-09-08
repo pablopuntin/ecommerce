@@ -49,7 +49,7 @@ let UsersRepository = class UsersRepository {
         });
         if (!dbUser)
             throw new Error(`No se encontro el usuario con id: ${newUser.id}`);
-        const { password, ...userNoPassword } = newUser;
+        const { password, ...userNoPassword } = dbUser;
         return userNoPassword;
     }
     async updateUser(id, user) {

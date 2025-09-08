@@ -6,10 +6,7 @@ import { Type } from "class-transformer";
 
 export class CreateUserDto {
   
-  @ApiHideProperty()
-  id: string;
-  @ApiHideProperty()
-  orders: Order[];
+  
    
   /**
    * debe ser un string de entre 3 y 50 caracteres

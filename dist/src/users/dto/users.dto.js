@@ -16,8 +16,6 @@ const class_validator_1 = require("class-validator");
 const matchPassword_decorators_1 = require("../../decorators/matchPassword.decorators");
 const class_transformer_1 = require("class-transformer");
 class CreateUserDto {
-    id;
-    orders;
     name;
     email;
     password;
@@ -32,14 +30,6 @@ class CreateUserDto {
     }
 }
 exports.CreateUserDto = CreateUserDto;
-__decorate([
-    (0, swagger_1.ApiHideProperty)(),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "id", void 0);
-__decorate([
-    (0, swagger_1.ApiHideProperty)(),
-    __metadata("design:type", Array)
-], CreateUserDto.prototype, "orders", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),

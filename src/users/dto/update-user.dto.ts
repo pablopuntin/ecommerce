@@ -6,11 +6,7 @@ import { ApiHideProperty } from '@nestjs/swagger';
 
 export class UpdateusertDto extends PartialType(CreateUserDto) {
 
-  @ApiHideProperty()
-  id: string;
-  @ApiHideProperty()
-  orders: Order[];
-
+  
 
   @IsOptional()
   @IsString()

@@ -6,14 +6,10 @@
 
  @Entity({name: 'orders'})
  export class Order {
-   @ApiHideProperty()
+  
      @PrimaryGeneratedColumn('uuid')
      id: string;
 
-     @ApiProperty({
-       description: 'fecha en formato dd/mm/yyyy',
-       example: '13/08/2025'
-     })
      @Column({type: 'date'})
      date: Date;
 

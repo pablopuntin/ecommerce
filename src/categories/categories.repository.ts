@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Categories } from './entities/categories.entity';
 import * as data from '../../asset/data.json'
-import { Product } from 'src/products/entities/product.entity';
+
 
 @Injectable()
 export class CategoriesRepository {
@@ -16,6 +16,7 @@ export class CategoriesRepository {
   async getAllCategories() {
     return await this.categoriesRepository.find();
     }
+
  async addCategories() {
     await Promise.all(
       data.map(async (element: { category: string }) => {

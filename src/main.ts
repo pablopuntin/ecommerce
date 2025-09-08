@@ -9,7 +9,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Para que use ValidationPipe y transforme el body a DTO
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    transform: true,
+  }),
+);
 
   const config = new DocumentBuilder()
     .setTitle('Proyect Modulo 04')

@@ -16,8 +16,6 @@ const users_dto_1 = require("./users.dto");
 const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
 class UpdateusertDto extends (0, mapped_types_1.PartialType)(users_dto_1.CreateUserDto) {
-    id;
-    orders;
     country;
     city;
     name;
@@ -30,14 +28,6 @@ class UpdateusertDto extends (0, mapped_types_1.PartialType)(users_dto_1.CreateU
     }
 }
 exports.UpdateusertDto = UpdateusertDto;
-__decorate([
-    (0, swagger_1.ApiHideProperty)(),
-    __metadata("design:type", String)
-], UpdateusertDto.prototype, "id", void 0);
-__decorate([
-    (0, swagger_1.ApiHideProperty)(),
-    __metadata("design:type", Array)
-], UpdateusertDto.prototype, "orders", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),

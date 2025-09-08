@@ -1,8 +1,10 @@
+// import { UsersRepository } from 'src/users/users.repository';
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
 import { CreateUserDto } from "./dto/users.dto";
+import { error } from 'console';
 
 
 @Injectable()
@@ -10,7 +12,6 @@ export class UsersRepository{
   constructor (
     @InjectRepository(User) private usersRepository: Repository<User>,
   ){}
-
 
   async getUsers (page: number, limit: number){
   //Parseo page y limit porque llegan com string del front
@@ -50,7 +51,7 @@ export class UsersRepository{
        })
     //retorna el usuario sin la contraseña
     if(!dbUser) throw new Error(`No se encontro el usuario con id: ${newUser.id}`);
-    const {password, ...userNoPassword}= newUser;
+    const {password, ...userNoPassword}= dbUser;
     return userNoPassword;
   }
 
@@ -76,4 +77,10 @@ export class UsersRepository{
      return await this.usersRepository.findOneBy({email});
    }
 
-}
+  //  async updateAdmin (id: string Partial<User>){
+  //   const user = await this.UsersRepository.findOne((id));
+  //   if (!user)throw new error(`no existe el usuario con el id: ${id}` );
+
+
+   }
+
