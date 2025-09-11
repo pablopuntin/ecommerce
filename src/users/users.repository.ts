@@ -77,10 +77,5 @@ export class UsersRepository{
      return await this.usersRepository.findOneBy({email});
    }
 
-  //  async updateAdmin (id: string Partial<User>){
-  //   const user = await this.UsersRepository.findOne((id));
-  //   if (!user)throw new error(`no existe el usuario con el id: ${id}` );
-
-
-   }
+     }
 
