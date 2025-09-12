@@ -27,7 +27,7 @@ export class ProductsController {
   }
 
   
-  // Nuevo: obtener producto por ID
+ 
   @Get(':id')
   getProductById(@Param('id') id: string) {
     return this.productService.getProductById(id);
@@ -36,7 +36,7 @@ export class ProductsController {
  @ApiBearerAuth()
  @ApiBody({ type: UpdateProductDto })
   @Put(':id')
-     @Roles(Role.Admin)//'admin' pasar al resto de rutas
+     @Roles(Role.Admin)
       @UseGuards(AuthGuard, RolesGuard)
   updateProduct(@Param('id') id: string, @Body() product: Product) {
     return this.productService.updateProduct(id, product);

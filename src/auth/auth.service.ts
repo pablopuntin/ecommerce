@@ -15,16 +15,16 @@ import { JwtService } from '@nestjs/jwt';
     return 'Autenticacion'
    }
 
-   //Registro
+  
    async signUp(user:Partial<User>){
         const {email, password} = user;
-        //*Verificar que no exista el usuario que se quiere registrar
+       
         if (!email || !password)
           throw new BadRequestException('se necesita mail y password');
         const foundUser = await this.usersRepository.getUserByEmail(email);
         if (foundUser)   throw new BadRequestException('email ya registrado');
 
-        //hashear el password
+      
         const hashedPassword = await bcrypt.hash(password, 8)
         if (!hashedPassword)  throw new BadRequestException('no se pudo Hashear el password');
         //creamos el usuario en bd
@@ -38,16 +38,16 @@ import { JwtService } from '@nestjs/jwt';
       
  
  async signIn(email: string, password: string) {
-     //ver si el usuario existe
-      const foundUser = await this.usersRepository.getUserByEmail(email);
+     
+  const foundUser = await this.usersRepository.getUserByEmail(email);
        if (!foundUser)   throw new BadRequestException('credenciales incorrectas');
        
-       //validar pass con hash
+      
        const validPassword = await bcrypt.compare(password, foundUser.password);
        if (!validPassword)   throw new BadRequestException('credenciales incorrectas');
 
        //generar token (firmamos token)
-       const payLoad = {id: foundUser.id, isAdmin: foundUser.isAdmin}//email no lo envio por las dudas alguien pueda ver el request}
+       const payLoad = {id: foundUser.id, isAdmin: foundUser.isAdmin}
       const token = this.jwtService.sign(payLoad);
       
       return{

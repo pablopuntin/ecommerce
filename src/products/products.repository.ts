@@ -26,7 +26,7 @@ export class ProductsRepository{
     return products;
   }
 
-  // 🔹 GET /products/:id
+ 
     async getProductById(id: string) {
         const product = await this.productsRepository.findOneBy({id});
         if (!product) {return `Producto con ${id} no encontrado`;
@@ -34,7 +34,7 @@ export class ProductsRepository{
         return product;
     }
 
-    // async addProducts(){
+   
        async addProducts() {
   const categories = await this.categoriesRepository.find();
 
@@ -51,7 +51,7 @@ export class ProductsRepository{
       product.stock = element.stock;
       product.categories = category;
 
-      await this.productsRepository.save(product); // más directo
+      await this.productsRepository.save(product); 
     })
   );
 

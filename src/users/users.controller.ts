@@ -1,5 +1,5 @@
 import { Role } from './../auth/roles.enum';
-import { Controller, Delete, Get, Put, Param, Body,Query, ParseUUIDPipe} from '@nestjs/common';
+import { Controller, Delete, Get, Put, Param, Body,Query, ParseUUIDPipe, Req} from '@nestjs/common';
 import { UserService } from './users.service';
 import { AuthGuard } from 'src/auth/guard/auth.guard';  
 import { UseGuards } from '@nestjs/common';
@@ -15,15 +15,13 @@ export class UsersController {
 
   @ApiBearerAuth()
   @Get()
-  @Roles(Role.Admin)//'admin' pasar al resto de rutas
+  @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)
   getUsers(
      @Query('page') page?: string,
         @Query('limit') limit?: string) {
-          //si se envian
-          if (page && limit)
+             if (page && limit)
     return this.userService.getUsers(Number(page), Number(limit));
-          //si no se envian
           return this.userService.getUsers(1, 5);
   }
 
@@ -46,11 +44,12 @@ export class UsersController {
   }
    
   
- @ApiBearerAuth()
-  @Delete(':id')
-  @UseGuards(AuthGuard)
-  deleteUser(@Param('id', ParseUUIDPipe) id: string) {
-    return this.userService.deleteUser((id));
-  }
+@ApiBearerAuth()
+@Delete(':id')
+@UseGuards(AuthGuard) 
+deleteUser(@Param('id', ParseUUIDPipe) id: string, @Req() req) {
+  return this.userService.deleteUser(id, req.user);
+}
+
 
 }

@@ -3,9 +3,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
-import { CreateUserDto } from "./dto/users.dto";
-import { error } from 'console';
-
+import { Role } from "src/auth/roles.enum";
 
 @Injectable()
 export class UsersRepository{
@@ -18,7 +16,6 @@ export class UsersRepository{
     const skip = (page-1)* limit;
     const users = await this.usersRepository.find({
 
-      //take y skip son propiedades de BD 
       take: limit,
       skip: skip,
     });
@@ -42,14 +39,14 @@ export class UsersRepository{
   }
 
  
-  //usando dto
+  
   async addUser (user: Partial<User>){
        const newUser = await this.usersRepository.save(user);
        //buscamos el user sin el confirmPassword
        const dbUser= await this.usersRepository.findOneBy({
         id: newUser.id
        })
-    //retorna el usuario sin la contraseña
+   
     if(!dbUser) throw new Error(`No se encontro el usuario con id: ${newUser.id}`);
     const {password, ...userNoPassword}= dbUser;
     return userNoPassword;
@@ -65,10 +62,15 @@ export class UsersRepository{
     return userNoPassword;
   }
 
-  async deleteUser(id: string){
+  async deleteUser(id: string, currentUser: { id: string; role: Role }){
     const user = await this.usersRepository.findOneBy({id});
     if (!user) throw new Error (`No existe usuario con id ${id}`);
-    this.usersRepository.remove(user);
+
+     if (currentUser.id !== id && currentUser.role !== Role.Admin) {
+     throw new Error('No tienes permisos para borrar este usuario');
+   }
+
+    await this.usersRepository.remove(user);
     const {password, ...userNoPassword} = user;
     return userNoPassword;
   }
