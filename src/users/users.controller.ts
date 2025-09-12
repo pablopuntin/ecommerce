@@ -6,7 +6,7 @@ import { UseGuards } from '@nestjs/common';
 import { UpdateusertDto } from './dto/update-user.dto';
 import { Roles } from 'src/decorators/roles.decorator';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 
 
 @Controller('users')
@@ -17,6 +17,8 @@ export class UsersController {
   @Get()
   @Roles(Role.Admin)
   @UseGuards(AuthGuard, RolesGuard)
+   @ApiQuery({ name: 'page', required: false, description: 'Número de página', type: Number })
+  @ApiQuery({ name: 'limit', required: false, description: 'Elementos por página', type: Number })
   getUsers(
      @Query('page') page?: string,
         @Query('limit') limit?: string) {

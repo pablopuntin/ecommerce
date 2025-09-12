@@ -29,11 +29,11 @@ let UserService = class UserService {
     updateUser(id, user) {
         return this.usersRepository.updateUser(id, user);
     }
-    deleteUser(id) {
+    async deleteUser(id, currentUser) {
         if (!id) {
             throw new common_1.NotFoundException(`Usuario con id ${id} no encontrado`);
         }
-        return this.usersRepository.deleteUser(id);
+        return this.usersRepository.deleteUser(id, currentUser);
     }
 };
 exports.UserService = UserService;

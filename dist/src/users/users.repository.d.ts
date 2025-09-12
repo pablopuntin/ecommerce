@@ -1,5 +1,6 @@
 import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
+import { Role } from "src/auth/roles.enum";
 export declare class UsersRepository {
     private usersRepository;
     constructor(usersRepository: Repository<User>);
@@ -46,7 +47,10 @@ export declare class UsersRepository {
         isAdmin: boolean;
         orders: import("../orders/entities/order.entity").Order[];
     }>;
-    deleteUser(id: string): Promise<{
+    deleteUser(id: string, currentUser: {
+        id: string;
+        role: Role;
+    }): Promise<{
         id: string;
         name: string;
         email: string;

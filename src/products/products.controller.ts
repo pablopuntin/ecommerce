@@ -20,7 +20,7 @@ export class ProductsController {
       return this.productService.getProducts(Number(page), Number(limit));
     return this.productService.getProducts(Number(1), Number(5));
   }
-
+ 
   @Get ('seeder')
   addProducts(){
     return this.productService.addProducts();

@@ -35,7 +35,7 @@ export declare class UsersController {
         isAdmin: boolean;
         orders: import("../orders/entities/order.entity").Order[];
     }>;
-    deleteUser(id: string): Promise<{
+    deleteUser(id: string, req: any): Promise<{
         id: string;
         name: string;
         email: string;

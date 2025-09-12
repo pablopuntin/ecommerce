@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const typeorm_2 = require("typeorm");
+const roles_enum_1 = require("../auth/roles.enum");
 let UsersRepository = class UsersRepository {
     usersRepository;
     constructor(usersRepository) {
@@ -60,11 +61,14 @@ let UsersRepository = class UsersRepository {
         const { password, ...userNoPassword } = updatedUser;
         return userNoPassword;
     }
-    async deleteUser(id) {
+    async deleteUser(id, currentUser) {
         const user = await this.usersRepository.findOneBy({ id });
         if (!user)
             throw new Error(`No existe usuario con id ${id}`);
-        this.usersRepository.remove(user);
+        if (currentUser.id !== id && currentUser.role !== roles_enum_1.Role.Admin) {
+            throw new Error('No tienes permisos para borrar este usuario');
+        }
+        await this.usersRepository.remove(user);
         const { password, ...userNoPassword } = user;
         return userNoPassword;
     }

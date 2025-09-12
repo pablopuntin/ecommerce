@@ -39,8 +39,8 @@ let UsersController = class UsersController {
     updateUser(id, user) {
         return this.userService.updateUser(id, user);
     }
-    deleteUser(id) {
-        return this.userService.deleteUser((id));
+    deleteUser(id, req) {
+        return this.userService.deleteUser(id, req.user);
     }
 };
 exports.UsersController = UsersController;
@@ -49,6 +49,8 @@ __decorate([
     (0, common_1.Get)(),
     (0, roles_decorator_1.Roles)(roles_enum_1.Role.Admin),
     (0, common_2.UseGuards)(auth_guard_1.AuthGuard, roles_guard_1.RolesGuard),
+    (0, swagger_1.ApiQuery)({ name: 'page', required: false, description: 'Número de página', type: Number }),
+    (0, swagger_1.ApiQuery)({ name: 'limit', required: false, description: 'Elementos por página', type: Number }),
     openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Query)('page')),
     __param(1, (0, common_1.Query)('limit')),
@@ -83,8 +85,9 @@ __decorate([
     (0, common_2.UseGuards)(auth_guard_1.AuthGuard),
     openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "deleteUser", null);
 exports.UsersController = UsersController = __decorate([
