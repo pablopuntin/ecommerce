@@ -12,11 +12,12 @@ const typeOrmConfig: TypeOrmModuleOptions & DataSourceOptions = {
   entities: ['dist/**/*.entity.{ts,js}'],
   migrations: ['dist/migrations/*.{ts,js}'],
   migrationsTableName: 'migrations',
-  synchronize: false, // nunca en prod
+  synchronize: true, // nunca en prod
   logging: false,
-  dropSchema: false,
+  dropSchema: true,
   ssl: { rejectUnauthorized: false },
   autoLoadEntities: true  
+  
 };
 
 // 👉 Exportas para NestJS
