@@ -1,5 +1,6 @@
 import { UserService } from './users.service';
 import { UpdateusertDto } from './dto/update-user.dto';
+import { CreateUserDto } from './dto/users.dto';
 export declare class UsersController {
     private readonly userService;
     constructor(userService: UserService);
@@ -46,4 +47,15 @@ export declare class UsersController {
         isAdmin: boolean;
         orders: import("../orders/entities/order.entity").Order[];
     }>;
+    create(user: CreateUserDto): Promise<{
+        password: string;
+        name: string;
+        email: string;
+        confirmPassword: string;
+        address: string;
+        phone: number;
+        country: string;
+        city: string;
+        isAdmin?: boolean;
+    } & import("./entities/user.entity").User>;
 }

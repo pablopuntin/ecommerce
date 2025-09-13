@@ -1,6 +1,7 @@
 import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
 import { Role } from "src/auth/roles.enum";
+import { CreateUserDto } from "./dto/users.dto";
 export declare class UsersRepository {
     private usersRepository;
     constructor(usersRepository: Repository<User>);
@@ -62,4 +63,15 @@ export declare class UsersRepository {
         orders: import("../orders/entities/order.entity").Order[];
     }>;
     getUserByEmail(email: string): Promise<User | null>;
+    createUser(user: CreateUserDto): Promise<{
+        password: string;
+        name: string;
+        email: string;
+        confirmPassword: string;
+        address: string;
+        phone: number;
+        country: string;
+        city: string;
+        isAdmin?: boolean;
+    } & User>;
 }

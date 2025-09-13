@@ -50,4 +50,15 @@ export declare class UserService {
         isAdmin: boolean;
         orders: import("../orders/entities/order.entity").Order[];
     }>;
+    createUser(user: any): Promise<{
+        password: string;
+        name: string;
+        email: string;
+        confirmPassword: string;
+        address: string;
+        phone: number;
+        country: string;
+        city: string;
+        isAdmin?: boolean;
+    } & import("./entities/user.entity").User>;
 }

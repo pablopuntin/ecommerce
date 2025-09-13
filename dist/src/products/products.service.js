@@ -29,6 +29,9 @@ let ProductsService = class ProductsService {
     updateProduct(id, product) {
         return this.productsRepository.updateProduct(id, product);
     }
+    async createProd(product) {
+        return await this.productsRepository.createProd(product);
+    }
 };
 exports.ProductsService = ProductsService;
 exports.ProductsService = ProductsService = __decorate([

@@ -67,6 +67,14 @@ let ProductsRepository = class ProductsRepository {
         });
         return updatedProduct;
     }
+    async createProd(product) {
+        const existing = await this.productsRepository.findOneBy({
+            name: product.name,
+        });
+        if (existing)
+            throw new Error(`el producto ${product.name} ya existe`);
+        await this.productsRepository.save(product);
+    }
 };
 exports.ProductsRepository = ProductsRepository;
 exports.ProductsRepository = ProductsRepository = __decorate([

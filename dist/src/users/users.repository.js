@@ -18,6 +18,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const typeorm_2 = require("typeorm");
 const roles_enum_1 = require("../auth/roles.enum");
+const bcrypt = require("bcrypt");
 let UsersRepository = class UsersRepository {
     usersRepository;
     constructor(usersRepository) {
@@ -74,6 +75,20 @@ let UsersRepository = class UsersRepository {
     }
     async getUserByEmail(email) {
         return await this.usersRepository.findOneBy({ email });
+    }
+    async createUser(user) {
+        const existUser = await this.usersRepository.findOneBy({
+            email: user.email
+        });
+        if (existUser)
+            throw new Error(`ya exisite un usuario con el email: ${user.email}`);
+        const hashedPassword = await bcrypt.hash(user.password, 8);
+        if (!hashedPassword)
+            throw new common_1.BadRequestException('no se pudo Hashear el password');
+        return await this.usersRepository.save({
+            ...user,
+            password: hashedPassword
+        });
     }
 };
 exports.UsersRepository = UsersRepository;

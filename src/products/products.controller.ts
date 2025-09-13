@@ -8,6 +8,7 @@ import { Roles } from 'src/decorators/roles.decorator';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
 import { ApiBearerAuth, ApiBody, ApiQuery } from "@nestjs/swagger";
 import {UpdateProductDto} from './dto/update-product.dto'
+import { CreateProductDto } from "./dto/create-product.dto";
 
 
 @Controller('products')
@@ -44,6 +45,14 @@ export class ProductsController {
     return this.productService.updateProduct(id, product);
   }
 
-  
+  //rutas nuevas
+
+  @ApiBearerAuth()
+  @ApiBody({ type: UpdateProductDto })
+  @Post('create')
+  create(@Body()product:CreateProductDto ){
+    return this.productService.createProd(product)
+  }
+
 
 }

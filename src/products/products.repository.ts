@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Categories } from "src/categories/entities/categories.entity";
-import { Product } from "./entities/product.entity";
+import { Product } from './entities/product.entity';
 import * as data from '../../asset/data.json'
 import { Repository } from "typeorm";
+import { CreateProductDto } from "./dto/create-product.dto";
 
 @Injectable()
 export class ProductsRepository{
@@ -67,6 +68,16 @@ export class ProductsRepository{
         id
       });
       return updatedProduct;
+    }
+
+    //rutas nuevas
+    async createProd(product: CreateProductDto){
+      
+      const existing = await this.productsRepository.findOneBy({
+        name: product.name,
+      })
+      if(existing) throw new Error (`el producto ${product.name} ya existe`);
+      await this.productsRepository.save(product)
     }
 
   }

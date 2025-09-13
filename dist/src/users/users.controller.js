@@ -23,6 +23,7 @@ const update_user_dto_1 = require("./dto/update-user.dto");
 const roles_decorator_1 = require("../decorators/roles.decorator");
 const roles_guard_1 = require("../auth/guard/roles.guard");
 const swagger_1 = require("@nestjs/swagger");
+const users_dto_1 = require("./dto/users.dto");
 let UsersController = class UsersController {
     userService;
     constructor(userService) {
@@ -41,6 +42,9 @@ let UsersController = class UsersController {
     }
     deleteUser(id, req) {
         return this.userService.deleteUser(id, req.user);
+    }
+    create(user) {
+        return this.userService.createUser(user);
     }
 };
 exports.UsersController = UsersController;
@@ -90,6 +94,16 @@ __decorate([
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "deleteUser", null);
+__decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.Post)('create'),
+    (0, swagger_1.ApiBody)({ type: users_dto_1.CreateUserDto }),
+    openapi.ApiResponse({ status: 201, type: Object }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [users_dto_1.CreateUserDto]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "create", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UserService])

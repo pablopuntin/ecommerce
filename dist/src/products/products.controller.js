@@ -24,6 +24,7 @@ const roles_decorator_1 = require("../decorators/roles.decorator");
 const roles_guard_1 = require("../auth/guard/roles.guard");
 const swagger_1 = require("@nestjs/swagger");
 const update_product_dto_1 = require("./dto/update-product.dto");
+const create_product_dto_1 = require("./dto/create-product.dto");
 let ProductsController = class ProductsController {
     productService;
     constructor(productService) {
@@ -42,6 +43,9 @@ let ProductsController = class ProductsController {
     }
     updateProduct(id, product) {
         return this.productService.updateProduct(id, product);
+    }
+    create(product) {
+        return this.productService.createProd(product);
     }
 };
 exports.ProductsController = ProductsController;
@@ -84,6 +88,16 @@ __decorate([
     __metadata("design:paramtypes", [String, product_entity_1.Product]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "updateProduct", null);
+__decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBody)({ type: update_product_dto_1.UpdateProductDto }),
+    (0, common_1.Post)('create'),
+    openapi.ApiResponse({ status: 201 }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto]),
+    __metadata("design:returntype", void 0)
+], ProductsController.prototype, "create", null);
 exports.ProductsController = ProductsController = __decorate([
     (0, common_2.Controller)('products'),
     __metadata("design:paramtypes", [products_service_1.ProductsService])
