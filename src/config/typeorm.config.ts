@@ -12,9 +12,9 @@ const typeOrmConfig: TypeOrmModuleOptions & DataSourceOptions = {
   entities: ['dist/**/*.entity.{ts,js}'],
   migrations: ['dist/migrations/*.{ts,js}'],
   migrationsTableName: 'migrations',
-  synchronize: true, // nunca en prod
+  synchronize: false, // nunca en prod
   logging: false,
-  dropSchema: true,
+  dropSchema: false,
   ssl: { rejectUnauthorized: false },
   autoLoadEntities: true  
   
