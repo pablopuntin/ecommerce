@@ -15,6 +15,7 @@ const typeOrmConfig = {
     synchronize: false,
     logging: false,
     dropSchema: false,
+    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
 };
 exports.default = typeOrmConfig;
 exports.connectionSource = new typeorm_1.DataSource(typeOrmConfig);

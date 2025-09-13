@@ -46,6 +46,8 @@ let ProductsController = class ProductsController {
 };
 exports.ProductsController = ProductsController;
 __decorate([
+    (0, swagger_1.ApiQuery)({ name: 'page', required: false, type: Number, example: 1, description: 'Número de página (por defecto 1)' }),
+    (0, swagger_1.ApiQuery)({ name: 'limit', required: false, type: Number, example: 5, description: 'Cantidad de items por página (por defecto 5)' }),
     (0, common_1.Get)(),
     openapi.ApiResponse({ status: 200, type: [require("./entities/product.entity").Product] }),
     __param(0, (0, common_1.Query)('page')),

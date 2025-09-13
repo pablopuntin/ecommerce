@@ -1,9 +1,12 @@
-// import { UsersRepository } from 'src/users/users.repository';
-import { Injectable, NotFoundException } from "@nestjs/common";
+
+import { Injectable, NotFoundException,BadRequestException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
 import { Role } from "src/auth/roles.enum";
+import { CreateUserDto } from "./dto/users.dto";
+import * as bcrypt from 'bcrypt';
+
 
 @Injectable()
 export class UsersRepository{
@@ -77,6 +80,24 @@ export class UsersRepository{
 
    async getUserByEmail(email: string){
      return await this.usersRepository.findOneBy({email});
+   }
+
+   //metodos nuevos
+
+   async createUser(user:CreateUserDto){
+    const existUser = await this.usersRepository.findOneBy({
+      email: user.email
+    })
+    if(existUser) throw new Error(`ya exisite un usuario con el email: ${user.email}`);
+    
+    const hashedPassword = await bcrypt.hash(user.password, 8)
+            if (!hashedPassword)  throw new BadRequestException('no se pudo Hashear el password');
+        
+    return  await this.usersRepository.save({
+          ...user,
+          password: hashedPassword
+        })
+
    }
 
      }

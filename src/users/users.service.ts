@@ -36,5 +36,11 @@ return this.usersRepository.getUserById(id)
     return this.usersRepository.deleteUser(id, currentUser);
   }
 
+  //metodos nuevos
+
+  async createUser(user){
+    
+    return await this.usersRepository.createUser(user);
+  }
 
 }

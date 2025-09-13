@@ -15,9 +15,8 @@ const typeOrmConfig: TypeOrmModuleOptions & DataSourceOptions = {
   synchronize: false, // nunca en prod
   logging: false,
   dropSchema: false,
-  ssl: { rejectUnauthorized: false },
-  autoLoadEntities: true  
-  
+  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+
 };
 
 // 👉 Exportas para NestJS

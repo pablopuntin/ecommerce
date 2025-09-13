@@ -1,12 +1,13 @@
 import { Role } from './../auth/roles.enum';
-import { Controller, Delete, Get, Put, Param, Body,Query, ParseUUIDPipe, Req} from '@nestjs/common';
+import { Controller, Delete, Get, Put, Param, Body,Query, ParseUUIDPipe, Req, Post} from '@nestjs/common';
 import { UserService } from './users.service';
 import { AuthGuard } from 'src/auth/guard/auth.guard';  
 import { UseGuards } from '@nestjs/common';
 import { UpdateusertDto } from './dto/update-user.dto';
 import { Roles } from 'src/decorators/roles.decorator';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
-import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiQuery } from '@nestjs/swagger';
+import { CreateUserDto } from './dto/users.dto';
 
 
 @Controller('users')
@@ -53,5 +54,13 @@ deleteUser(@Param('id', ParseUUIDPipe) id: string, @Req() req) {
   return this.userService.deleteUser(id, req.user);
 }
 
+//metodos nuevos
+
+@ApiBearerAuth()
+@Post('create')
+@ApiBody({type: CreateUserDto})
+create(@Body() user:CreateUserDto ){
+  return this.userService.createUser(user);
+}
 
 }

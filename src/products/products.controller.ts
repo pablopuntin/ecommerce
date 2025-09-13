@@ -6,7 +6,7 @@ import { AuthGuard } from "src/auth/guard/auth.guard";
 import { Role } from "src/auth/roles.enum";
 import { Roles } from 'src/decorators/roles.decorator';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
-import { ApiBearerAuth, ApiBody } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody, ApiQuery } from "@nestjs/swagger";
 import {UpdateProductDto} from './dto/update-product.dto'
 
 
@@ -14,6 +14,8 @@ import {UpdateProductDto} from './dto/update-product.dto'
 export class ProductsController {
   constructor (private readonly productService: ProductsService){}
 
+    @ApiQuery({ name: 'page', required: false, type: Number, example: 1, description: 'Número de página (por defecto 1)' })
+  @ApiQuery({ name: 'limit', required: false, type: Number, example: 5, description: 'Cantidad de items por página (por defecto 5)' })
   @Get()
   getProducts(@Query('page') page:string, @Query('limit')limit: string){
     if (page && limit)
